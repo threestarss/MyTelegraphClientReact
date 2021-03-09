@@ -1,0 +1,14 @@
+import Header from './Header';
+import MainContainer from './MainContainer';
+import './style.css';
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <MainContainer />
+    </div>
+  )
+}
+
+export default App;
