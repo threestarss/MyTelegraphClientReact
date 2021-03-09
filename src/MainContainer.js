@@ -1,4 +1,12 @@
 import { Welcome } from "./Welcome";
+function BookmarkMenu() {
+  return (
+    <aside className="bookmark-menu col-3">
+
+    </aside>
+  )
+}
+
 
 function MainContainer() {
   return (
@@ -7,9 +15,7 @@ function MainContainer() {
         <main className='col-9' id='parent'>
           <Welcome />
         </main>
-        <aside className='bookmark-menu col-3'>
-
-        </aside>
+        <BookmarkMenu />
       </div>
     </div>
   )
