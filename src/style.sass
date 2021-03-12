@@ -43,6 +43,8 @@ article
     padding-left: 15px
   aside
     margin: 0 21px 12px
+    text-align: center
+    font-style: italic
   img
     max-width: 732px
     width: 100%
@@ -65,7 +67,10 @@ h5
 header.container-fluid
   height: 115px
 
-main
+.content-container
+  display: flex
+  flex-direction: column
+  overflow-x: hidden
   overflow-y: auto
   height: 94vh
 
@@ -108,6 +113,13 @@ main
   h5
     line-height: 1.4
     padding-right: 15px
+
+.bookmark-container
+  padding-left: 0
+
+.main-container
+  padding-left: 24px
+  padding-right: 0
 
 .card
   .bookmark-btn
@@ -252,6 +264,7 @@ main
 
   .bookmark-header
     display: flex
+    height: 7vh
     background-color: #222
 
   .border-left
@@ -269,6 +282,7 @@ main
       margin-top: 5px
 
   .row-height
+    padding-right: 12px
     height: 100%
 
   .spinner-grow

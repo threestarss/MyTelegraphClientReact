@@ -1,14 +1,19 @@
-import ArticleHeader from './ArticleHeader';
+import ArticleHeader from "./ArticleHeader";
+import ArticleTag from "./ArticleTag";
 
-function Article(props) {
-  const content = props.content.map(elem => /* обработка ответа API, по итогу content будет массивом jsx элементов */);
+function Article({ article }) {
+  const content = article.content.map((elem, index) => {
+    return <ArticleTag {...elem} key={index} />;
+  });
 
   return (
-    <article>
-      <ArticleHeader title={title} author={author} />
-      { content }
-    </article>
-  )
+    <div className="article-container">
+      <article>
+        <ArticleHeader title={article.title} author={article.author_name} />
+        {content}
+      </article>
+    </div>
+  );
 }
 
 export default Article;

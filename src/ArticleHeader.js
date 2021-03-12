@@ -1,8 +1,8 @@
-function ArticleHeader(props) {
+function ArticleHeader({ title, author }) {
   return (
     <header className="article-header">
-      <h3>{props.title}</h3>
-      <p>{props.author}</p>
+      <h3>{title}</h3>
+      <p>{author}</p>
     </header>
   );
 }
