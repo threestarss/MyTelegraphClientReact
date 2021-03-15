@@ -3,7 +3,7 @@ import React from "react";
 
 function ArticleTag({ tag, children, attrs }) {
   function childrenMap(array) {
-    return children.map((elem, index) =>
+    return array.map((elem, index) =>
       typeof elem === "string" ? elem : <ArticleTag {...elem} key={index} />
     );
   }

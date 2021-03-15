@@ -7,14 +7,23 @@ function Card({
     cse_image: [{ src: largeImg } = {}] = [],
   },
 }) {
+  function trimTitle(title) {
+    return title.slice(0, title.length - 11);
+  }
+
   return (
-    <div className="col mt-2 mb-3">
-      <div className="card">
+    <div className="col mt-2 mb-3" onClick={(event) => console.log(event)}>
+      <div
+        className="card"
+        data-link={link}
+        data-snippet={snippet}
+        data-title={trimTitle(title)}
+      >
         <div className="img-container">
           <img className="card-img-top" src={smallImg || largeImg} alt="" />
         </div>
         <div className="card-body">
-          <h5>{title}</h5>
+          <h5>{trimTitle(title)}</h5>
           <p>{snippet}</p>
         </div>
       </div>

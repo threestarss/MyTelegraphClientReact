@@ -6,22 +6,21 @@ import SearchContext from "./SearchContext";
 function MainContainer() {
   const [fetchTarget, setFetchTarget] = useState("test");
   const [fetchResponse, setFetchResponse] = useState("");
-  const [welcome, setWelcome] = useState(true);
-  const [articleMode, setArticleMode] = useState(false);
-  const [searchTarget, setSearchTarget] = useState("");
+  const [serpStart, setSerpStart] = useState(1);
+  const [mode, setMode] = useState(null);
   const { searchResults, setSearchResults } = useContext(SearchContext);
-  const searchMode = true;
 
   function handleFetchChange(event) {
     setFetchTarget(event.target.value);
   }
   function handleSearchChange(event) {
-    setSearchTarget(event.target.value);
+    setSearchResults((state) =>
+      Object.assign(state, { query: `${event.target.value}` })
+    );
   }
 
-  function modeChange() {
-    setArticleMode((state) => !state);
-    setWelcome((welcome) => !welcome);
+  function setModeToNull() {
+    setMode(null);
   }
 
   async function fetchHandler(event) {
@@ -34,22 +33,20 @@ function MainContainer() {
     );
     const response = await fetchResult.json();
     setFetchResponse(() => Object.assign({}, response.result));
-
-    if (welcome) {
-      setWelcome((welcome) => !welcome);
-    }
-    setArticleMode((state) => !state);
+    setMode(true);
   }
 
   async function searchHandler(event) {
     event.preventDefault();
-    let start = 1;
 
-    const searchResult = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchTarget}&start=${start}`
+    const googleResponse = await fetch(
+      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
     );
-    const serp = await searchResult.json();
-    setSearchResults((state) => [...state, ...serp.items]);
+    const result = await googleResponse.json();
+    setSearchResults((state) =>
+      Object.assign(state, { serp: [...state.serp, ...result.items] })
+    );
+    setMode(false);
   }
 
   return (
@@ -61,7 +58,7 @@ function MainContainer() {
               className="logo"
               alt="logo"
               src="./icon.png"
-              onClick={modeChange}
+              onClick={setModeToNull}
               width="35"
               height="35"
             />
@@ -78,7 +75,12 @@ function MainContainer() {
           </div>
         </div>
       </header>
-      <ContentContainer welcome={welcome} mode={searchMode} />
+      <ContentContainer
+        data={fetchResponse}
+        mode={mode}
+        serpStart={serpStart}
+        setSerpStart={setSerpStart}
+      />
     </div>
   );
 }

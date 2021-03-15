@@ -13,7 +13,6 @@ function Header({ setFetchResponse, setFetchTarget, setWelcome, fetchTarget }) {
     );
     const response = await fetchResult.json();
     setFetchResponse(() => Object.assign({}, response.result));
-    setWelcome((welcome) => (welcome ? !welcome : welcome));
   }
 
   return (

@@ -5,7 +5,10 @@ import "./style.css";
 import SearchContext from "./SearchContext";
 
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState({
+    query: "",
+    serp: [],
+  });
 
   return (
     <SearchContext.Provider value={{ searchResults, setSearchResults }}>
