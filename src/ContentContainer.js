@@ -1,18 +1,16 @@
 import { useContext } from "react";
-import Article from "./Article_components/Article";
 import SearchContext from "./SearchContext";
-import Welcome from "./Welcome";
+
+import Article from "./Article_components/Article";
 import CardContainer from "./Search_components/CardContainer";
+import Welcome from "./Welcome";
 
 function ContentContainer({ data, mode, serpStart, setSerpStart }) {
   const { searchResults, setSearchResults } = useContext(SearchContext);
 
   async function loadMoreResults(event) {
-    console.log(searchResults);
     const googleResponse = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${
-        searchResults.query
-      }&start=${serpStart + 10}`
+      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
     );
     const result = await googleResponse.json();
     setSearchResults((state) =>
@@ -21,7 +19,6 @@ function ContentContainer({ data, mode, serpStart, setSerpStart }) {
       })
     );
     setSerpStart(serpStart + 10);
-    console.log(searchResults);
   }
 
   return (

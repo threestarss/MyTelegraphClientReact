@@ -68,8 +68,6 @@ article blockquote {
 
 article aside {
   margin: 0 21px 12px;
-  text-align: center;
-  font-style: italic;
 }
 
 article img {
@@ -101,7 +99,7 @@ header.container-fluid {
   height: 115px;
 }
 
-.content-container {
+.main-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -111,7 +109,7 @@ header.container-fluid {
           flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 94vh;
+  height: 99vh;
 }
 
 .article-header .bookmark-btn {
@@ -171,9 +169,10 @@ header.container-fluid {
 
 .bookmark-container {
   padding-left: 0;
+  padding-right: 0;
 }
 
-.main-container {
+.content-container {
   padding-left: 24px;
   padding-right: 0;
 }
@@ -377,7 +376,7 @@ header.container-fluid {
     margin-right: auto;
   }
   .bookmark div.col-8 p {
-    line-height: 1.6;
+    line-height: 1.4;
   }
   .bookmark:hover {
     cursor: pointer;

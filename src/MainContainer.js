@@ -1,17 +1,21 @@
 import { useState, useContext } from "react";
+
+import ArticleContext from "./ArticleContext";
 import ContentContainer from "./ContentContainer";
-import Form from "./Form";
 import SearchContext from "./SearchContext";
 
-function MainContainer() {
-  const [fetchTarget, setFetchTarget] = useState("test");
-  const [fetchResponse, setFetchResponse] = useState("");
-  const [serpStart, setSerpStart] = useState(1);
-  const [mode, setMode] = useState(null);
+import Form from "./Form";
+
+function MainContainer({ appMode }) {
+  const { article, setArticle } = useContext(ArticleContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
 
+  const [fetchResponse, setFetchResponse] = useState("");
+  const [serpStart, setSerpStart] = useState(1);
+  const [mode, setMode] = appMode;
+
   function handleFetchChange(event) {
-    setFetchTarget(event.target.value);
+    setArticle(event.target.value);
   }
   function handleSearchChange(event) {
     setSearchResults((state) =>
@@ -27,26 +31,34 @@ function MainContainer() {
     event.preventDefault();
 
     const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${fetchTarget.slice(
-        19
-      )}?return_content=true`
+      `https://api.telegra.ph/getPage/${article.slice(19)}?return_content=true`
     );
     const response = await fetchResult.json();
+    console.log(response);
     setFetchResponse(() => Object.assign({}, response.result));
     setMode(true);
   }
 
   async function searchHandler(event) {
     event.preventDefault();
+    setSerpStart(1);
 
-    const googleResponse = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
-    );
-    const result = await googleResponse.json();
-    setSearchResults((state) =>
-      Object.assign(state, { serp: [...state.serp, ...result.items] })
-    );
-    setMode(false);
+    try {
+      const googleResponse = await fetch(
+        `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
+      );
+      const result = await googleResponse.json();
+      if (!result.items) {
+        throw new Error("No results");
+      }
+      setSearchResults((state) =>
+        Object.assign(state, { serp: [...state.serp, ...result.items] })
+      );
+      setMode(false);
+      setSerpStart((state) => state + 10);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
