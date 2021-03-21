@@ -5,7 +5,7 @@ import Article from "./Article_components/Article";
 import CardContainer from "./Search_components/CardContainer";
 import Welcome from "./Welcome";
 
-function ContentContainer({ data, mode, serpStart, setSerpStart }) {
+function ContentContainer({ appMode, data, mode, serpStart, setSerpStart }) {
   const { searchResults, setSearchResults } = useContext(SearchContext);
 
   async function loadMoreResults(event) {
@@ -27,7 +27,9 @@ function ContentContainer({ data, mode, serpStart, setSerpStart }) {
         <div id="parent">
           {mode === null && <Welcome />}
           {mode === true && <Article article={data} />}
-          {mode === false && <CardContainer data={searchResults.serp} />}
+          {mode === false && (
+            <CardContainer data={searchResults.serp} appMode={appMode} />
+          )}
           {mode === false && (
             <button onClick={loadMoreResults} id="loadmore">
               Load More Results

@@ -23,12 +23,6 @@ function App() {
     getBookmarksFromLocalStorage();
   }, []);
 
-  function stateLog() {
-    console.log(article, "Article State");
-    console.log(bookmarks, "Bookmarks State");
-    console.log(searchResults, "Search State");
-  }
-
   function getBookmarksFromLocalStorage() {
     setBookmarks(JSON.parse(localStorage.getItem("bookmarks")));
   }
@@ -38,9 +32,6 @@ function App() {
       <BookmarksContext.Provider value={{ bookmarks, setBookmarks }}>
         <SearchContext.Provider value={{ searchResults, setSearchResults }}>
           <div className="row">
-            <button className="state-logger" onClick={stateLog}>
-              STATE LOGGER
-            </button>
             <MainContainer appMode={appMode} />
             <BookmarkMenu appMode={appMode} bookmarks={bookmarks} />
           </div>

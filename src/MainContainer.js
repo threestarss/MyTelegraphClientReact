@@ -94,6 +94,7 @@ function MainContainer({ appMode }) {
         </div>
       </header>
       <ContentContainer
+        appMode={appMode}
         data={article}
         mode={mode}
         serpStart={serpStart}

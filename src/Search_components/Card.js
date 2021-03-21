@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import BookmarkBtn from "../Bookmarks_components/BookmarkBtn";
-import BookmarksContext from "../BookmarksContext";
 
 function Card({
   title,
@@ -12,7 +10,6 @@ function Card({
   },
 }) {
   let placeholder = "/src/placeholder.png";
-  const { bookmarks } = useContext(BookmarksContext);
 
   function trimTitle(title) {
     return title.slice(0, title.length - 11);

@@ -1,23 +1,25 @@
 import { useContext } from "react";
+import ArticleContext from "../ArticleContext";
 import BookmarksContext from "../BookmarksContext";
 
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
-function CardContainer({ data, children }) {
+function CardContainer({ appMode, data, children }) {
+  const { setArticle } = useContext(ArticleContext);
   const { bookmarks, setBookmarks } = useContext(BookmarksContext);
+  const [, setMode] = appMode;
 
   function duplicateCheck(link) {
     return bookmarks.some((elem) => elem.link === link);
   }
 
-  function handleClick(event) {
+  async function handleClick(event) {
+    const btnClassList = event.target.parentElement.classList;
+    const card = event.target.closest(".card");
+    const datasetObj = Object.assign({}, card.dataset);
+    const { link, img, title, snippet } = datasetObj;
     if (event.target.parentElement instanceof HTMLButtonElement) {
-      const btnClassList = event.target.parentElement.classList;
-      const card = event.target.closest(".card");
-      const datasetObj = Object.assign({}, card.dataset);
-      const { link, img, title, snippet } = datasetObj;
-
       if (btnClassList.contains("marked")) {
         btnClassList.toggle("marked");
         setBookmarks((state) => {
@@ -36,6 +38,14 @@ function CardContainer({ data, children }) {
           return newState;
         });
       }
+    } else {
+      const fetchResult = await fetch(
+        `https://api.telegra.ph/getPage/${link.slice(19)}?return_content=true`
+      );
+      const response = await fetchResult.json();
+      console.log(link);
+      setArticle(Object.assign({}, response.result));
+      setMode(true);
     }
   }
 
