@@ -1,12 +1,22 @@
-import { useContext } from "react";
-import Bookmark from "./Bookmark";
-import BookmarksContext from "../BookmarksContext";
-import ArticleContext from "../ArticleContext";
+import { useEffect } from "react";
+import { useAppContext } from "../AppContext";
 
-function BookmarkMenu({ appMode, bookmarks }) {
-  const { setBookmarks } = useContext(BookmarksContext);
-  const { setArticle } = useContext(ArticleContext);
+import Bookmark from "./Bookmark";
+
+function BookmarkMenu({ appMode }) {
+  const { bookmarks, setBookmarks, setArticle } = useAppContext();
   const [, setMode] = appMode;
+
+  useEffect(() => {
+    if (!localStorage.bookmarks) {
+      localStorage.setItem("bookmarks", JSON.stringify([]));
+    }
+    getBookmarksFromLocalStorage();
+  }, []);
+
+  function getBookmarksFromLocalStorage() {
+    setBookmarks(JSON.parse(localStorage.getItem("bookmarks")));
+  }
 
   let bookmarkList = bookmarks.map((elem) => (
     <Bookmark {...elem} key={elem.link} />
@@ -26,7 +36,7 @@ function BookmarkMenu({ appMode, bookmarks }) {
         `https://api.telegra.ph/getPage/${link.slice(19)}?return_content=true`
       );
       const response = await fetchResult.json();
-      console.log(link);
+      console.log(response);
       setArticle(Object.assign({}, response.result));
       setMode(true);
     }

@@ -16,7 +16,10 @@ function ArticleTag({ tag, children = [], attrs }) {
       });
     }
     if (elem.tag === "br") {
-      return createElement(elem.tag, elem.attrs);
+      return <br />;
+    }
+    if (elem.tag === "hr") {
+      return <hr />;
     }
     return <ArticleTag {...elem} key={index} />;
   });

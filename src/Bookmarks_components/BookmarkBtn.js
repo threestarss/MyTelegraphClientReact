@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import BookmarksContext from "../BookmarksContext";
+import { useAppContext } from "../AppContext";
 
 function BookmarkBtn({ link }) {
-  const { bookmarks } = useContext(BookmarksContext);
+  const { bookmarks } = useAppContext();
 
   function duplicateCheck(link) {
     return bookmarks.some((elem) => elem.link === link);

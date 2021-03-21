@@ -1,14 +1,17 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useAppContext } from "./AppContext";
 
-import ArticleContext from "./ArticleContext";
 import ContentContainer from "./ContentContainer";
-import SearchContext from "./SearchContext";
 
 import Form from "./Form";
 
 function MainContainer({ appMode }) {
-  const { article, setArticle } = useContext(ArticleContext);
-  const { searchResults, setSearchResults } = useContext(SearchContext);
+  const {
+    article,
+    searchResults,
+    setArticle,
+    setSearchResults,
+  } = useAppContext();
 
   const [fetchTarget, setFetchTarget] = useState("");
   const [serpStart, setSerpStart] = useState(1);

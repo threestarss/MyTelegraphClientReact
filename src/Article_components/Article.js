@@ -3,6 +3,12 @@ import ArticleTag from "./ArticleTag";
 
 function Article({ article }) {
   const content = article.content.map((elem, index) => {
+    if (elem.tag === "br") {
+      return <br />;
+    }
+    if (elem.tag === "hr") {
+      return <hr />;
+    }
     return <ArticleTag {...elem} key={index} />;
   });
   console.log(article);

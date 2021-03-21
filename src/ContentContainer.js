@@ -1,12 +1,11 @@
-import { useContext } from "react";
-import SearchContext from "./SearchContext";
+import { useAppContext } from "./AppContext";
 
 import Article from "./Article_components/Article";
 import CardContainer from "./Search_components/CardContainer";
 import Welcome from "./Welcome";
 
 function ContentContainer({ appMode, data, mode, serpStart, setSerpStart }) {
-  const { searchResults, setSearchResults } = useContext(SearchContext);
+  const { searchResults, setSearchResults } = useAppContext();
 
   async function loadMoreResults(event) {
     const googleResponse = await fetch(

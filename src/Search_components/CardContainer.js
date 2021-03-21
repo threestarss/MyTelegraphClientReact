@@ -1,13 +1,10 @@
-import { useContext } from "react";
-import ArticleContext from "../ArticleContext";
-import BookmarksContext from "../BookmarksContext";
+import { useAppContext } from "../AppContext";
 
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
 function CardContainer({ appMode, data, children }) {
-  const { setArticle } = useContext(ArticleContext);
-  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
+  const { bookmarks, setBookmarks, setArticle } = useAppContext();
   const [, setMode] = appMode;
 
   function duplicateCheck(link) {

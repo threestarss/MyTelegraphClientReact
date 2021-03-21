@@ -1,11 +1,10 @@
-import { useContext } from "react";
-import BookmarksContext from "../BookmarksContext";
+import { useAppContext } from "../AppContext";
 
 import BookmarkBtn from "../Bookmarks_components/BookmarkBtn";
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 
 function ArticleHeader({ title, author, link, img, snippet }) {
-  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
+  const { bookmarks, setBookmarks } = useAppContext();
 
   function duplicateCheck(link) {
     return bookmarks.some((elem) => elem.link === link);

@@ -34,8 +34,31 @@ article figure {
   margin: 0 21px 12px;
 }
 
+article figure figcaption {
+  padding: 12px 21px 0;
+  line-height: 18px;
+  vertical-align: top;
+  text-align: center;
+}
+
 article p {
   margin: 0 21px 12px;
+  word-wrap: break-word;
+}
+
+article p a {
+  margin: 0;
+}
+
+article a {
+  margin: 0 21px 12px;
+}
+
+article aside {
+  margin: 18px 21px 16px;
+  padding: 0 18px;
+  text-align: center;
+  font-style: italic;
 }
 
 article h3 {
@@ -66,8 +89,24 @@ article blockquote {
   padding-left: 15px;
 }
 
+article blockquote a {
+  margin: 0;
+}
+
 article aside {
   margin: 0 21px 12px;
+}
+
+article ol {
+  margin: 21px;
+  padding: 0;
+}
+
+article ol li {
+  margin-left: 30px;
+  margin-bottom: 14px;
+  padding: 0;
+  position: relative;
 }
 
 article img {
@@ -163,7 +202,7 @@ header.container-fluid {
 }
 
 .bookmark h5 {
-  line-height: 1.4;
+  line-height: 1.2;
   padding-right: 15px;
 }
 
