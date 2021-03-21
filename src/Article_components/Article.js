@@ -5,11 +5,18 @@ function Article({ article }) {
   const content = article.content.map((elem, index) => {
     return <ArticleTag {...elem} key={index} />;
   });
+  console.log(article);
 
   return (
     <div className="article-container">
       <article>
-        <ArticleHeader title={article.title} author={article.author_name} />
+        <ArticleHeader
+          title={article.title}
+          author={article.author_name}
+          link={article.url}
+          img={article.image_url}
+          snippet={article.description}
+        />
         {content}
       </article>
     </div>

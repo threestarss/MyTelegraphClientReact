@@ -5,18 +5,14 @@ import BookmarksContext from "../BookmarksContext";
 function Card({
   title,
   snippet,
-  formattedUrl: link,
+  link,
   pagemap: {
     cse_thumbnail: [{ src: smallImg } = {}] = [],
     cse_image: [{ src: largeImg } = {}] = [],
   },
 }) {
   let placeholder = "/src/placeholder.png";
-  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
-
-  function duplicateCheck(link) {
-    return bookmarks.some((elem) => elem.link === link);
-  }
+  const { bookmarks } = useContext(BookmarksContext);
 
   function trimTitle(title) {
     return title.slice(0, title.length - 11);
@@ -31,7 +27,7 @@ function Card({
         data-title={trimTitle(title)}
         data-snippet={snippet}
       >
-        <BookmarkBtn marked={duplicateCheck(link.toLowerCase())} />
+        <BookmarkBtn link={link.toLowerCase()} />
         <div className="img-container">
           <img
             className="card-img-top"

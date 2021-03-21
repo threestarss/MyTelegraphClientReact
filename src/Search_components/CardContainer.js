@@ -1,16 +1,11 @@
 import { useContext } from "react";
 import BookmarksContext from "../BookmarksContext";
 
+import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
 function CardContainer({ data, children }) {
   const { bookmarks, setBookmarks } = useContext(BookmarksContext);
-  function BookmarkConstructor(link, img, title, snippet) {
-    this.link = link;
-    this.img = img;
-    this.title = title;
-    this.snippet = snippet;
-  }
 
   function duplicateCheck(link) {
     return bookmarks.some((elem) => elem.link === link);
@@ -25,13 +20,21 @@ function CardContainer({ data, children }) {
 
       if (btnClassList.contains("marked")) {
         btnClassList.toggle("marked");
-        setBookmarks((state) => state.filter((elem) => elem.link !== link));
+        setBookmarks((state) => {
+          let filteredState = state.filter((elem) => elem.link !== link);
+          localStorage.setItem("bookmarks", JSON.stringify(filteredState));
+          return filteredState;
+        });
       } else if (!duplicateCheck(link)) {
-        setBookmarks((state) => [
-          ...state,
-          new BookmarkConstructor(link, img, title, snippet),
-        ]);
         btnClassList.toggle("marked");
+        setBookmarks((state) => {
+          let newState = [
+            ...state,
+            new BookmarkConstructor(link, img, title, snippet),
+          ];
+          localStorage.setItem("bookmarks", JSON.stringify(newState));
+          return newState;
+        });
       }
     }
   }

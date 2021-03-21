@@ -10,12 +10,12 @@ function MainContainer({ appMode }) {
   const { article, setArticle } = useContext(ArticleContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
 
-  const [fetchResponse, setFetchResponse] = useState("");
+  const [fetchTarget, setFetchTarget] = useState("");
   const [serpStart, setSerpStart] = useState(1);
   const [mode, setMode] = appMode;
 
   function handleFetchChange(event) {
-    setArticle(event.target.value);
+    setFetchTarget(event.target.value);
   }
   function handleSearchChange(event) {
     setSearchResults((state) =>
@@ -31,21 +31,26 @@ function MainContainer({ appMode }) {
     event.preventDefault();
 
     const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${article.slice(19)}?return_content=true`
+      `https://api.telegra.ph/getPage/${fetchTarget.slice(
+        19
+      )}?return_content=true`
     );
     const response = await fetchResult.json();
     console.log(response);
-    setFetchResponse(() => Object.assign({}, response.result));
+    setArticle(() => Object.assign({}, response.result));
     setMode(true);
   }
 
   async function searchHandler(event) {
     event.preventDefault();
     setSerpStart(1);
+    setSearchResults((state) => Object.assign(state, { serp: [] }));
 
     try {
       const googleResponse = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
+        `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${
+          searchResults.query
+        }&start=${1}`
       );
       const result = await googleResponse.json();
       if (!result.items) {
@@ -56,6 +61,7 @@ function MainContainer({ appMode }) {
       );
       setMode(false);
       setSerpStart((state) => state + 10);
+      console.log(searchResults);
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +94,7 @@ function MainContainer({ appMode }) {
         </div>
       </header>
       <ContentContainer
-        data={fetchResponse}
+        data={article}
         mode={mode}
         serpStart={serpStart}
         setSerpStart={setSerpStart}
