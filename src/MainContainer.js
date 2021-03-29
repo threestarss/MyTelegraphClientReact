@@ -80,15 +80,24 @@ function MainContainer({ appMode }) {
 
   async function fetchHandler(event) {
     event.preventDefault();
-    const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${fetchTarget.slice(
-        19
-      )}?return_content=true`
-    );
-    const response = await fetchResult.json();
-    console.log(response);
-    setArticle(() => Object.assign({}, response.result));
-    setMode(true);
+    setErrorType("fetch");
+    try {
+      const fetchResult = await fetch(
+        `https://api.telegra.ph/getPage/${fetchTarget.slice(
+          19
+        )}?return_content=true`
+      );
+      const response = await fetchResult.json();
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Page not found");
+      }
+      setArticle(() => Object.assign({}, response.result));
+      setMode(true);
+    } catch (error) {
+      setShowError(true);
+      console.error(error);
+    }
   }
 
   async function searchHandler(event) {

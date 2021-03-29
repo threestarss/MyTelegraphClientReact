@@ -17,8 +17,8 @@ function ErrorModal({ errorType, children }) {
     timeoutRef.current = setTimeout(() => {
       setShowError(false);
       errorRoot.removeChild(errorRef.current);
-    }, 4000);
-  }, []);
+    }, 3500);
+  }, [setShowError]);
 
   return createPortal(
     <div className="error" onClick={removeError}>
@@ -26,6 +26,7 @@ function ErrorModal({ errorType, children }) {
         {errorType === "search"
           ? "Your search did not match any documents. Make sure that all words are spelled correctly."
           : null}
+        {errorType === "fetch" ? "Page not found." : null}
       </p>
     </div>,
     errorRef.current
