@@ -1,7 +1,9 @@
-import MainContainer from "./MainContainer";
-import BookmarkMenu from "./Bookmarks_components/BookmarkMenu";
-import { useState } from "react";
 import "./style.css";
+
+import { useState } from "react";
+
+import BookmarkMenu from "./Bookmarks_components/BookmarkMenu";
+import MainContainer from "./MainContainer";
 
 import { AppContextProvider } from "./AppContext";
 

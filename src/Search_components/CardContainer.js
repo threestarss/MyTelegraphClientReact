@@ -1,62 +1,92 @@
+import { useEffect } from "react";
 import { useAppContext } from "../AppContext";
-
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
-function CardContainer({ appMode, data, children }) {
-  const { bookmarks, setBookmarks, setArticle } = useAppContext();
+function CardContainer({ appMode, serp }) {
+  const { bookmarks, scrollPos, setBookmarks, setArticle } = useAppContext();
   const [, setMode] = appMode;
+  const page = document.querySelector(".main-container");
 
-  function duplicateCheck(link) {
-    return bookmarks.some((elem) => elem.link === link);
-  }
+  useEffect(() => {
+    page.scrollTo(0, scrollPos);
+  }, [scrollPos, page]);
+
+  return (
+    <div
+      className="card-container row row-cols-1 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1"
+      onClick={handleClick}
+    >
+      {serp.map((elem, index) => (
+        <Card {...elem} key={index + 1} />
+      ))}
+    </div>
+  );
 
   async function handleClick(event) {
+    if (!event.target.closest(".card")) return;
+
     const btnClassList = event.target.parentElement.classList;
     const card = event.target.closest(".card");
-    const datasetObj = Object.assign({}, card.dataset);
-    const { link, img, title, snippet } = datasetObj;
+    const { link, img, title, snippet } = card.dataset;
+
     if (event.target.parentElement instanceof HTMLButtonElement) {
       if (btnClassList.contains("marked")) {
         btnClassList.toggle("marked");
-        setBookmarks((state) => {
-          let filteredState = state.filter((elem) => elem.link !== link);
-          localStorage.setItem("bookmarks", JSON.stringify(filteredState));
-          return filteredState;
-        });
-      } else if (!duplicateCheck(link)) {
+        deleteBookmark(link);
+        return;
+      }
+      if (!duplicateCheck(link, bookmarks)) {
         btnClassList.toggle("marked");
-        setBookmarks((state) => {
-          let newState = [
-            ...state,
-            new BookmarkConstructor(link, img, title, snippet),
-          ];
-          localStorage.setItem("bookmarks", JSON.stringify(newState));
-          return newState;
-        });
+        addBookmark(link, img, title, snippet);
       }
     } else {
-      const fetchResult = await fetch(
-        `https://api.telegra.ph/getPage/${link.slice(19)}?return_content=true`
-      );
-      const response = await fetchResult.json();
-      console.log(link);
-      setArticle(Object.assign({}, response.result));
+      const article = await fetchArticle(link);
+      setArticle(Object.assign({}, article));
       setMode(true);
     }
   }
 
-  return (
-    <div
-      className="row row-cols-1 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1"
-      onClick={handleClick}
-    >
-      {data.map((elem, index) => (
-        <Card {...elem} key={index + 1} />
-      ))}
-      {children}
-    </div>
-  );
+  async function fetchArticle(link) {
+    const fetchResult = await fetch(
+      `https://api.telegra.ph/getPage/${linkTrim(link)}?return_content=true`
+    );
+    const response = await fetchResult.json();
+    // console.log(link);
+    // console.log(fetchResult);
+    // console.log(response);
+    return response.result;
+  }
+
+  function addBookmark(link, img, title, snippet) {
+    setBookmarks((state) => {
+      let newState = [
+        ...state,
+        new BookmarkConstructor(link, img, title, snippet),
+      ];
+      localStorage.setItem("bookmarks", JSON.stringify(newState));
+      return newState;
+    });
+  }
+
+  function deleteBookmark(link) {
+    setBookmarks((state) => {
+      let filteredState = state.filter((elem) => elem.link !== link);
+      localStorage.setItem("bookmarks", JSON.stringify(filteredState));
+      return filteredState;
+    });
+  }
+
+  function duplicateCheck(link, arr) {
+    return arr.some((elem) => elem.link === link);
+  }
+
+  function linkTrim(link) {
+    if (link.startsWith("https")) {
+      return link.slice(19);
+    }
+    return link.slice(18);
+  }
 }
 
 export default CardContainer;
