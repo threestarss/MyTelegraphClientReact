@@ -1,25 +1,19 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useAppContext } from "./AppContext";
 
 import ContentContainer from "./ContentContainer";
 import Form from "./Form";
 import ErrorModal from "./ErrorModal";
 
-function MainContainer({ appMode }) {
-  const {
-    article,
-    searchResults,
-    showError,
-    setArticle,
-    setScrollPos,
-    setSearchResults,
-    setShowError,
-  } = useAppContext();
+function MainContainer() {
+  const { searchResults, setScrollPos, setSearchResults } = useAppContext();
 
+  const error = useSelector((state) => state.appMode.error);
   const [errorType, setErrorType] = useState("");
   const [fetchTarget, setFetchTarget] = useState("");
   const [serpStart, setSerpStart] = useState(1);
-  const [mode, setMode] = appMode;
+  const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
 
   return (
@@ -42,26 +36,24 @@ function MainContainer({ appMode }) {
             />
             <Form
               placeholder="URL of article..."
-              handleSubmit={fetchHandler}
+              handleSubmit={handleFetch}
               handleChange={handleFetchChange}
             />
           </div>
         </div>
       </header>
-      {showError && <ErrorModal errorType={errorType} />}
-      <ContentContainer
-        appMode={appMode}
-        data={article}
-        mode={mode}
-        serpStart={serpStart}
-        setSerpStart={setSerpStart}
-      />
+      {error && <ErrorModal errorType={errorType} />}
+      <ContentContainer serpStart={serpStart} setSerpStart={setSerpStart} />
     </div>
   );
 
   function saveScrollPosition(event) {
     if (!event.target.closest(".card")) return;
-    setScrollPos(page.scrollTop);
+    // setScrollPos(page.scrollTop);
+    dispatch({
+      type: "SET_SCROLL_POS",
+      payload: { scrollPos: page.scrollTop },
+    });
   }
 
   function handleFetchChange(event) {
@@ -75,20 +67,19 @@ function MainContainer({ appMode }) {
   }
 
   function setModeToNull() {
-    setMode(null);
+    dispatch({ type: "EDITOR_MODE" });
   }
 
-  async function fetchHandler(event) {
+  async function handleFetch(event) {
     event.preventDefault();
-    const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${fetchTarget.slice(
-        19
-      )}?return_content=true`
+
+    dispatch(
+      fetchArticle(
+        `https://api.telegra.ph/getPage/${fetchTarget.slice(
+          19
+        )}?return_content=true`
+      )
     );
-    const response = await fetchResult.json();
-    console.log(response);
-    setArticle(() => Object.assign({}, response.result));
-    setMode(true);
   }
 
   async function searchHandler(event) {
@@ -109,13 +100,29 @@ function MainContainer({ appMode }) {
       setSearchResults((state) =>
         Object.assign(state, { serp: [...result.items] })
       );
-      setMode(false);
+      dispatch({ type: "SEARCH_MODE" });
       setSerpStart((state) => state + 10);
       console.log(searchResults);
     } catch (error) {
-      setShowError(true);
+      dispatch({ type: "ERROR_MODE" });
       console.log(error.message);
     }
+  }
+
+  function fetchArticle(link) {
+    return async function (dispatch) {
+      const fetchResult = await fetch(link);
+      const response = await fetchResult.json();
+      console.log(response);
+      dispatch(articleModeAction(response.result));
+    };
+  }
+
+  function articleModeAction(result) {
+    return {
+      type: "ARTICLE_MODE",
+      payload: result,
+    };
   }
 }
 

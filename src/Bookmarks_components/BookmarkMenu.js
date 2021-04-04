@@ -1,11 +1,14 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import { useAppContext } from "../AppContext";
 
 import Bookmark from "./Bookmark";
 
 function BookmarkMenu({ appMode }) {
   const { bookmarks, setBookmarks, setArticle } = useAppContext();
-  const [, setMode] = appMode;
+  // const [, setMode] = appMode;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!localStorage.bookmarks) {
@@ -29,7 +32,8 @@ function BookmarkMenu({ appMode }) {
     } else {
       const article = await fetchArticle(link);
       setArticle(Object.assign({}, article));
-      setMode(true);
+      // setMode(true);
+      dispatch({ type: "ARTICLE_MODE" });
     }
   }
 

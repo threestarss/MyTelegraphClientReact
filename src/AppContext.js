@@ -10,7 +10,6 @@ export function AppContextProvider({ children }) {
     serp: [],
   });
   const [scrollPos, setScrollPos] = useState(0);
-  const [showError, setShowError] = useState(false);
 
   return (
     <AppContext.Provider
@@ -19,12 +18,10 @@ export function AppContextProvider({ children }) {
         bookmarks,
         scrollPos,
         searchResults,
-        showError,
         setArticle,
         setBookmarks,
         setScrollPos,
         setSearchResults,
-        setShowError,
       }}
     >
       {children}

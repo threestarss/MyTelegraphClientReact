@@ -1,11 +1,13 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import { useAppContext } from "../AppContext";
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
-function CardContainer({ appMode, serp }) {
-  const { bookmarks, scrollPos, setBookmarks, setArticle } = useAppContext();
-  const [, setMode] = appMode;
+function CardContainer({ serp }) {
+  const { bookmarks, scrollPos, setBookmarks } = useAppContext();
+  const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
 
   useEffect(() => {
@@ -41,21 +43,28 @@ function CardContainer({ appMode, serp }) {
         addBookmark(link, img, title, snippet);
       }
     } else {
-      const article = await fetchArticle(link);
-      setArticle(Object.assign({}, article));
-      setMode(true);
+      dispatch(
+        fetchArticle(
+          `https://api.telegra.ph/getPage/${linkTrim(link)}?return_content=true`
+        )
+      );
     }
   }
 
   async function fetchArticle(link) {
-    const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${linkTrim(link)}?return_content=true`
-    );
-    const response = await fetchResult.json();
-    // console.log(link);
-    // console.log(fetchResult);
-    // console.log(response);
-    return response.result;
+    return async function (dispatch) {
+      const fetchResult = await fetch(link);
+      const response = await fetchResult.json();
+      console.log(response);
+      dispatch(articleModeAction(response.result));
+    };
+  }
+
+  function articleModeAction(result) {
+    return {
+      type: "ARTICLE_MODE",
+      payload: result,
+    };
   }
 
   function addBookmark(link, img, title, snippet) {

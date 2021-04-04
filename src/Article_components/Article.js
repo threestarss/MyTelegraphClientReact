@@ -1,12 +1,14 @@
 import { useEffect, createElement } from "react";
+import { useDispatch } from "react-redux";
+
 import { useAppContext } from "../AppContext";
 
 import ArticleHeader from "./ArticleHeader";
 import ArticleTag from "./ArticleTag";
 
-function Article({ article, appMode }) {
+function Article({ article }) {
   const { searchResults } = useAppContext();
-  const [, setMode] = appMode;
+  const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
   const content = article.content.map((elem, index) => {
     if (elem.tag === "img") return createElement(elem.tag, elem.attrs);
@@ -40,9 +42,9 @@ function Article({ article, appMode }) {
 
   function goBack() {
     if (searchResults.serp.length !== 0) {
-      setMode(false);
+      dispatch({ type: "SEARCH_MODE" });
     } else {
-      setMode(null);
+      dispatch({ type: "EDITOR_MODE" });
     }
   }
 }

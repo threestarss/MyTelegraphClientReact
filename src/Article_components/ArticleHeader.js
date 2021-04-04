@@ -26,11 +26,12 @@ function ArticleHeader({ title, author, link, img, snippet }) {
   }
 
   function handleClick(event) {
-    if (!event.target.closest(".card")) return;
+    if (!event.target.closest("header")) return;
+    console.log(bookmarks);
 
     const btnClassList = event.target.parentElement.classList;
-    const card = event.target.closest(".card");
-    const { link, img, title, snippet } = card.dataset;
+    const header = event.target.closest("header");
+    const { link, img, title, snippet } = header.dataset;
 
     if (event.target.parentElement instanceof HTMLButtonElement) {
       if (btnClassList.contains("marked")) {

@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+
+import { useDispatch } from "react-redux";
 import { useAppContext } from "./AppContext";
 
 function ErrorModal({ errorType, children }) {
+  const dispatch = useDispatch();
   const { setShowError } = useAppContext();
   const timeoutRef = useRef(null);
   const errorRef = useRef(null);
@@ -15,7 +18,7 @@ function ErrorModal({ errorType, children }) {
   useEffect(() => {
     errorRoot.append(errorRef.current);
     timeoutRef.current = setTimeout(() => {
-      setShowError(false);
+      dispatch({ type: "ERROR_MODE" });
       errorRoot.removeChild(errorRef.current);
     }, 4000);
   }, []);
