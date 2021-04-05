@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 const rootReducer = combineReducers({
   appMode,
   article,
+  serp,
 });
 
 export const store = createStore(
@@ -40,7 +41,7 @@ function appMode(state = { mode: null, error: false, scrollPos: 0 }, action) {
   if (action.type === "SET_SCROLL_POS") {
     return {
       ...state,
-      scrollPos: action.payload.scrollPos,
+      scrollPos: action.payload,
     };
   }
   return state;
@@ -50,7 +51,25 @@ function article(state = {}, action) {
   if (action.type === "ARTICLE_MODE") {
     return {
       ...state,
-      result: { ...action.payload },
+      ...action.payload,
+    };
+  }
+  return state;
+}
+
+function serp(state = { serpStart: 1 }, action) {
+  if (action.type === "SEARCH_START") {
+    return {
+      ...state,
+      query: action.payload.query,
+      serpStart: action.payload.serpStart,
+      ...action.payload.serp,
+    };
+  }
+  if (action.type === "LOAD_MORE_RESULTS") {
+    return {
+      ...state,
+      items: [...state.items, ...action.payload.serp.items],
     };
   }
   return state;

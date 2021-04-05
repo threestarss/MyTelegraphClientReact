@@ -1,16 +1,15 @@
 import { useEffect, createElement } from "react";
-import { useDispatch } from "react-redux";
-
-import { useAppContext } from "../AppContext";
+import { useDispatch, useSelector } from "react-redux";
 
 import ArticleHeader from "./ArticleHeader";
 import ArticleTag from "./ArticleTag";
 
 function Article({ article }) {
-  const { searchResults } = useAppContext();
+  const serp = useSelector((state) => state.serp.items);
   const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
   const content = article.content.map((elem, index) => {
+    if (typeof elem === "string") return createElement("p", null, elem);
     if (elem.tag === "img") return createElement(elem.tag, elem.attrs);
     if (elem.tag === "br") return <br />;
     if (elem.tag === "hr") return <hr />;
@@ -41,7 +40,7 @@ function Article({ article }) {
   );
 
   function goBack() {
-    if (searchResults.serp.length !== 0) {
+    if (serp) {
       dispatch({ type: "SEARCH_MODE" });
     } else {
       dispatch({ type: "EDITOR_MODE" });

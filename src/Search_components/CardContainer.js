@@ -1,14 +1,17 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import fetchArticle from "../fetchArticle";
 
 import { useAppContext } from "../AppContext";
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 import Card from "./Card";
 
-function CardContainer({ serp }) {
-  const { bookmarks, scrollPos, setBookmarks } = useAppContext();
+function CardContainer() {
+  const { bookmarks, setBookmarks } = useAppContext();
   const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
+  const serp = useSelector((state) => state.serp.items);
+  const scrollPos = useSelector((state) => state.appMode.scrollPos);
 
   useEffect(() => {
     page.scrollTo(0, scrollPos);
@@ -26,10 +29,10 @@ function CardContainer({ serp }) {
   );
 
   async function handleClick(event) {
-    if (!event.target.closest(".card")) return;
+    const card = event.target.closest(".card");
+    if (!card) return;
 
     const btnClassList = event.target.parentElement.classList;
-    const card = event.target.closest(".card");
     const { link, img, title, snippet } = card.dataset;
 
     if (event.target.parentElement instanceof HTMLButtonElement) {
@@ -41,30 +44,10 @@ function CardContainer({ serp }) {
       if (!duplicateCheck(link, bookmarks)) {
         btnClassList.toggle("marked");
         addBookmark(link, img, title, snippet);
+        return;
       }
-    } else {
-      dispatch(
-        fetchArticle(
-          `https://api.telegra.ph/getPage/${linkTrim(link)}?return_content=true`
-        )
-      );
     }
-  }
-
-  async function fetchArticle(link) {
-    return async function (dispatch) {
-      const fetchResult = await fetch(link);
-      const response = await fetchResult.json();
-      console.log(response);
-      dispatch(articleModeAction(response.result));
-    };
-  }
-
-  function articleModeAction(result) {
-    return {
-      type: "ARTICLE_MODE",
-      payload: result,
-    };
+    dispatch(fetchArticle(link));
   }
 
   function addBookmark(link, img, title, snippet) {
@@ -88,13 +71,6 @@ function CardContainer({ serp }) {
 
   function duplicateCheck(link, arr) {
     return arr.some((elem) => elem.link === link);
-  }
-
-  function linkTrim(link) {
-    if (link.startsWith("https")) {
-      return link.slice(19);
-    }
-    return link.slice(18);
   }
 }
 

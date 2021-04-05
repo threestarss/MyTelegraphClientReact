@@ -1,21 +1,24 @@
-import { useSelector } from "react-redux";
-import { useAppContext } from "./AppContext";
+import { useDispatch, useSelector } from "react-redux";
 
 import Article from "./Article_components/Article";
 import CardContainer from "./Search_components/CardContainer";
 import Welcome from "./Welcome";
 
-function ContentContainer({ serpStart, setSerpStart }) {
-  const { searchResults, setSearchResults } = useAppContext();
+import fetchSerp from "./fetchSerp";
+
+function ContentContainer() {
+  const dispatch = useDispatch();
   const mode = useSelector((state) => state.appMode.mode);
-  const data = useSelector((state) => state.article.result);
+  const data = useSelector((state) => state.article);
+  const serpStart = useSelector((state) => state.serp.serpStart);
+  const query = useSelector((state) => state.serp.query);
 
   return (
     <main className="content-container container-fluid g-0">
       <div id="parent">
         {mode === null && <Welcome />}
         {mode === true && <Article article={data} />}
-        {mode === false && <CardContainer serp={searchResults.serp} />}
+        {mode === false && <CardContainer />}
         {mode === false && (
           <button onClick={loadMoreResults} id="loadmore">
             Load More Results
@@ -26,16 +29,7 @@ function ContentContainer({ serpStart, setSerpStart }) {
   );
 
   async function loadMoreResults(event) {
-    const googleResponse = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${searchResults.query}&start=${serpStart}`
-    );
-    const result = await googleResponse.json();
-    setSearchResults((state) =>
-      Object.assign(state, {
-        serp: [...state.serp, ...result.items],
-      })
-    );
-    setSerpStart(serpStart + 10);
+    dispatch(fetchSerp(query, serpStart, 1));
   }
 }
 
