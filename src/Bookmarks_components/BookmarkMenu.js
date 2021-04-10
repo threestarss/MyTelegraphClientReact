@@ -1,21 +1,21 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import fetchArticle from "../fetchArticle";
-import { useAppContext } from "../AppContext";
 
 import Bookmark from "./Bookmark";
 
 function BookmarkMenu() {
-  const { bookmarks, setBookmarks } = useAppContext();
   const dispatch = useDispatch();
+
+  const bookmarks = useSelector(state => state.bookmarks.list)
 
   useEffect(() => {
     if (!localStorage.bookmarks) {
       localStorage.setItem("bookmarks", JSON.stringify([]));
     }
-    setBookmarks(JSON.parse(localStorage.getItem("bookmarks")));
-  }, [setBookmarks]);
+    dispatch({ type: "ADD_BOOKMARK", payload: JSON.parse(localStorage.getItem("bookmarks"))})
+  }, []);
 
   let bookmarkList = bookmarks.map((elem) => (
     <Bookmark {...elem} key={elem.link} />
@@ -43,11 +43,7 @@ function BookmarkMenu() {
   );
 
   function deleteBookmark(link) {
-    setBookmarks((state) => {
-      let filteredState = state.filter((elem) => elem.link !== link);
-      localStorage.setItem("bookmarks", JSON.stringify(filteredState));
-      return filteredState;
-    });
+    dispatch({ type: "DELETE_BOOKMARK", payload: link })
   }
 }
 

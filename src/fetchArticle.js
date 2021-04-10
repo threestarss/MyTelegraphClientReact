@@ -9,7 +9,8 @@ export default function fetchArticle(link) {
       if (!response.ok) throw new Error("Page not found");
       dispatch(articleModeAction(response.result));
     } catch (error) {
-      dispatch({ type: "ERROR_MODE" });
+      console.log(error)
+      dispatch({ type: "ERROR_MODE", payload: error.message });
     }
   };
 }

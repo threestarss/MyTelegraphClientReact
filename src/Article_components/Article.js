@@ -5,8 +5,11 @@ import ArticleHeader from "./ArticleHeader";
 import ArticleTag from "./ArticleTag";
 
 function Article({ article }) {
-  const serp = useSelector((state) => state.serp.items);
   const dispatch = useDispatch();
+
+  const serp = useSelector((state) => state.serp.items);
+  const scrollPos = useSelector((state) => state.appMode.scrollPos);
+
   const page = document.querySelector(".main-container");
   const content = article.content.map((elem, index) => {
     if (typeof elem === "string") return createElement("p", null, elem);
@@ -24,7 +27,7 @@ function Article({ article }) {
   return (
     <div className="article-container">
       <article>
-        <button className="go-back-btn" onClick={goBack}>
+        <button className="go-back-btn btn btn-secondary" onClick={goBack}>
           Go Back
         </button>
         <ArticleHeader
@@ -40,6 +43,7 @@ function Article({ article }) {
   );
 
   function goBack() {
+    page.scrollTo(0, scrollPos);
     if (serp) {
       dispatch({ type: "SEARCH_MODE" });
     } else {

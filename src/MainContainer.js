@@ -10,11 +10,11 @@ import fetchArticle from "./fetchArticle";
 import fetchSerp from "./fetchSerp";
 
 function MainContainer() {
+  const dispatch = useDispatch();
+  
   const error = useSelector((state) => state.appMode.error);
-  const [errorType, setErrorType] = useState("");
   const [fetchTarget, setFetchTarget] = useState("");
   const [searchTarget, setSearchTarget] = useState("");
-  const dispatch = useDispatch();
   const page = document.querySelector(".main-container");
 
   return (
@@ -31,7 +31,7 @@ function MainContainer() {
           handleChange={handleFetchTargetChange}
         />
       </Header>
-      {error && <ErrorModal errorType={errorType} />}
+      {error && <ErrorModal />}
       <ContentContainer />
     </div>
   );

@@ -1,12 +1,15 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-function ErrorModal({ errorType }) {
+function ErrorModal() {
   const dispatch = useDispatch();
+
+  const errorType = useSelector(state => state.appMode.errorType)
   const timeoutRef = useRef(null);
   const errorRef = useRef(null);
   const errorRoot = document.querySelector("#error-root");
+
   if (!errorRef.current) {
     const div = document.createElement("div");
     errorRef.current = div;
@@ -23,9 +26,7 @@ function ErrorModal({ errorType }) {
   return createPortal(
     <div className="error" onClick={removeError}>
       <p>
-        {errorType === "search" &&
-          "Your search did not match any documents. Make sure that all words are spelled correctly."}
-        {errorType === "article" && "Page Not Found"}
+        {errorType}
       </p>
     </div>,
     errorRef.current
@@ -33,7 +34,7 @@ function ErrorModal({ errorType }) {
 
   function removeError(event) {
     clearTimeout(timeoutRef.current);
-    dispatch({ type: "ERROR_MODE" });
+    dispatch({ type: "ERROR_MODE", payload: "" });
     errorRoot.removeChild(errorRef.current);
   }
 }

@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 const rootReducer = combineReducers({
   appMode,
   article,
+  bookmarks,
   serp,
 });
 
@@ -13,7 +14,9 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-function appMode(state = { mode: null, error: false, scrollPos: 0 }, action) {
+store.subscribe(() => localStorage.setItem("bookmarks", JSON.stringify(store.getState().bookmarks.list)))
+
+function appMode(state = { mode: null, error: false, errorType: "", scrollPos: 0 }, action) {
   if (action.type === "ARTICLE_MODE") {
     return {
       ...state,
@@ -36,6 +39,7 @@ function appMode(state = { mode: null, error: false, scrollPos: 0 }, action) {
     return {
       ...state,
       error: !state.error,
+      errorType: action.payload
     };
   }
   if (action.type === "SET_SCROLL_POS") {
@@ -71,6 +75,22 @@ function serp(state = { serpStart: 1 }, action) {
       ...state,
       items: [...state.items, ...action.payload.serp.items],
     };
+  }
+  return state;
+}
+
+function bookmarks(state = { list: [] }, action) {
+  if (action.type === "ADD_BOOKMARK") {
+    return {
+      ...state,
+      list: [...state.list, ...action.payload]
+    }
+  }
+  if (action.type === "DELETE_BOOKMARK") {
+    return {
+      ...state,
+      list: state.list.filter(elem => elem.link !== action.payload)
+    }
   }
   return state;
 }

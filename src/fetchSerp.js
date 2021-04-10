@@ -19,7 +19,7 @@ export default function fetchSerp(query, serpStart, loadmore) {
       }
     } catch (error) {
       console.log(error);
-      dispatch({ type: "ERROR_MODE" });
+      dispatch({ type: "ERROR_MODE", payload: "" });
     }
   };
 }

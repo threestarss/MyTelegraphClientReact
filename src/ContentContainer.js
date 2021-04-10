@@ -20,7 +20,7 @@ function ContentContainer() {
         {mode === true && <Article article={data} />}
         {mode === false && <CardContainer />}
         {mode === false && (
-          <button onClick={loadMoreResults} id="loadmore">
+          <button className="btn btn-secondary" onClick={loadMoreResults} id="loadmore">
             Load More Results
           </button>
         )}
