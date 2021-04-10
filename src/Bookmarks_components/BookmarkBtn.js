@@ -1,7 +1,7 @@
-import { useAppContext } from "../AppContext";
+import { useSelector } from "react-redux"
 
 function BookmarkBtn({ link }) {
-  const { bookmarks } = useAppContext();
+  const bookmarks = useSelector(state => state.bookmarks.list)
 
   return (
     <button

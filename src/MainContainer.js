@@ -1,130 +1,66 @@
 import { useState } from "react";
-import { useAppContext } from "./AppContext";
+import { useDispatch, useSelector } from "react-redux";
 
 import ContentContainer from "./ContentContainer";
+import Header from "./Header";
 import Form from "./Form";
 import ErrorModal from "./ErrorModal";
 
-function MainContainer({ appMode }) {
-  const {
-    article,
-    searchResults,
-    showError,
-    setArticle,
-    setScrollPos,
-    setSearchResults,
-    setShowError,
-  } = useAppContext();
+import fetchArticle from "./fetchArticle";
+import fetchSerp from "./fetchSerp";
 
-  const [errorType, setErrorType] = useState("");
+function MainContainer() {
+  const dispatch = useDispatch();
+  
+  const error = useSelector((state) => state.appMode.error);
   const [fetchTarget, setFetchTarget] = useState("");
-  const [serpStart, setSerpStart] = useState(1);
-  const [mode, setMode] = appMode;
+  const [searchTarget, setSearchTarget] = useState("");
   const page = document.querySelector(".main-container");
 
   return (
     <div className="main-container col-9" onClick={saveScrollPosition}>
-      <header className="bg-dark container-fluid align-items-center pe-0 g-0">
-        <div className="row row-height">
-          <div className="header-menu col justify-content-between">
-            <img
-              className="logo"
-              alt="logo"
-              src="./icon.png"
-              onClick={setModeToNull}
-              width="35"
-              height="35"
-            />
-            <Form
-              placeholder="Telegra.ph search..."
-              handleSubmit={searchHandler}
-              handleChange={handleSearchChange}
-            />
-            <Form
-              placeholder="URL of article..."
-              handleSubmit={fetchHandler}
-              handleChange={handleFetchChange}
-            />
-          </div>
-        </div>
-      </header>
-      {showError && <ErrorModal errorType={errorType} />}
-      <ContentContainer
-        appMode={appMode}
-        data={article}
-        mode={mode}
-        serpStart={serpStart}
-        setSerpStart={setSerpStart}
-      />
+      <Header>
+        <Form
+          placeholder="Telegra.ph search..."
+          handleSubmit={handleSearch}
+          handleChange={handleSearchTargetChange}
+        />
+        <Form
+          placeholder="URL of article..."
+          handleSubmit={handleFetch}
+          handleChange={handleFetchTargetChange}
+        />
+      </Header>
+      {error && <ErrorModal />}
+      <ContentContainer />
     </div>
   );
 
   function saveScrollPosition(event) {
     if (!event.target.closest(".card")) return;
-    setScrollPos(page.scrollTop);
+    dispatch({
+      type: "SET_SCROLL_POS",
+      payload: page.scrollTop,
+    });
   }
 
-  function handleFetchChange(event) {
+  function handleFetchTargetChange(event) {
     setFetchTarget(event.target.value);
   }
 
-  function handleSearchChange(event) {
-    setSearchResults((state) =>
-      Object.assign(state, { query: `${event.target.value}` })
-    );
+  function handleSearchTargetChange(event) {
+    setSearchTarget(event.target.value);
   }
 
-  function setModeToNull() {
-    setMode(null);
-  }
-
-  async function fetchHandler(event) {
+  async function handleFetch(event) {
     event.preventDefault();
-    setErrorType("fetch");
-    try {
-      const fetchResult = await fetch(
-        `https://api.telegra.ph/getPage/${fetchTarget.slice(
-          19
-        )}?return_content=true`
-      );
-      const response = await fetchResult.json();
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Page not found");
-      }
-      setArticle(() => Object.assign({}, response.result));
-      setMode(true);
-    } catch (error) {
-      setShowError(true);
-      console.error(error);
-    }
+    dispatch(fetchArticle(fetchTarget));
   }
 
-  async function searchHandler(event) {
+  async function handleSearch(event) {
     event.preventDefault();
-    setErrorType("search");
-    try {
-      const googleResponse = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${
-          searchResults.query
-        }&start=${1}`
-      );
-      const result = await googleResponse.json();
-      console.log(result);
-      if (!result.items) {
-        throw new Error("No results");
-      }
-      setSerpStart(1);
-      setSearchResults((state) =>
-        Object.assign(state, { serp: [...result.items] })
-      );
-      setMode(false);
-      setSerpStart((state) => state + 10);
-      console.log(searchResults);
-    } catch (error) {
-      setShowError(true);
-      console.log(error.message);
-    }
+    await dispatch(fetchSerp(searchTarget, 1));
+    dispatch({ type: "SEARCH_MODE" });
   }
 }
 

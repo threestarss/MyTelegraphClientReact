@@ -1,36 +1,36 @@
 import { useEffect } from "react";
-import { useAppContext } from "../AppContext";
+import { useDispatch, useSelector } from "react-redux";
+
+import fetchArticle from "../fetchArticle";
 
 import Bookmark from "./Bookmark";
 
-function BookmarkMenu({ appMode }) {
-  const { bookmarks, setBookmarks, setArticle } = useAppContext();
-  const [, setMode] = appMode;
+function BookmarkMenu() {
+  const dispatch = useDispatch();
+
+  const bookmarks = useSelector(state => state.bookmarks.list)
 
   useEffect(() => {
     if (!localStorage.bookmarks) {
       localStorage.setItem("bookmarks", JSON.stringify([]));
     }
-    setBookmarks(JSON.parse(localStorage.getItem("bookmarks")));
-  }, [setBookmarks]);
+    dispatch({ type: "ADD_BOOKMARK", payload: JSON.parse(localStorage.getItem("bookmarks"))})
+  }, []);
 
   let bookmarkList = bookmarks.map((elem) => (
     <Bookmark {...elem} key={elem.link} />
   ));
 
   async function handleClick(event) {
-    if (!event.target.closest(".bookmark")) return;
-
     const bookmark = event.target.closest(".bookmark");
-    const link = bookmark.dataset.link;
+    if (!bookmark) return;
 
+    const link = bookmark.dataset.link;
     if (event.target.parentElement instanceof HTMLButtonElement) {
       deleteBookmark(link);
-    } else {
-      const article = await fetchArticle(link);
-      setArticle(Object.assign({}, article));
-      setMode(true);
+      return;
     }
+    dispatch(fetchArticle(link));
   }
 
   return (
@@ -42,28 +42,8 @@ function BookmarkMenu({ appMode }) {
     </div>
   );
 
-  async function fetchArticle(link) {
-    const fetchResult = await fetch(
-      `https://api.telegra.ph/getPage/${linkTrim(link)}?return_content=true`
-    );
-    const response = await fetchResult.json();
-    // console.log(link);
-    // console.log(fetchResult);
-    // console.log(response);
-    return response.result;
-  }
-
   function deleteBookmark(link) {
-    setBookmarks((state) => {
-      let filteredState = state.filter((elem) => elem.link !== link);
-      localStorage.setItem("bookmarks", JSON.stringify(filteredState));
-      return filteredState;
-    });
-  }
-
-  function linkTrim(link) {
-    if (link.startsWith("https")) return link.slice(19);
-    return link.slice(18);
+    dispatch({ type: "DELETE_BOOKMARK", payload: link })
   }
 }
 

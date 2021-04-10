@@ -251,7 +251,7 @@ header.container-fluid {
 }
 
 .card {
-  height: 395px;
+  height: 390px;
   max-width: 290px;
   background-color: #333;
 }
@@ -424,7 +424,7 @@ header.container-fluid {
   }
   .bookmark {
     width: 100%;
-    height: 16.66667vh;
+    height: 140px;
     border: 1px dashed #ccc;
     overflow: hidden;
   }
@@ -435,10 +435,10 @@ header.container-fluid {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 16.66667vh;
+    height: 140px;
   }
   .bookmark div.col-4 img {
-    max-height: 16.26667vh;
+    max-height: 140px;
     max-width: 100%;
     width: auto;
     height: auto;
@@ -446,7 +446,7 @@ header.container-fluid {
     margin-right: auto;
   }
   .bookmark div.col-8 p {
-    line-height: 1.4;
+    line-height: 1.5;
   }
   .bookmark:hover {
     cursor: pointer;
