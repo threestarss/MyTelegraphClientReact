@@ -1,10 +1,11 @@
-import { useAppContext } from "../AppContext";
+import { useDispatch, useSelector } from "react-redux"
 
 import BookmarkBtn from "../Bookmarks_components/BookmarkBtn";
 import BookmarkConstructor from "../Bookmarks_components/BookmarkConstructor";
 
 function ArticleHeader({ title, author, link, img, snippet }) {
-  const { bookmarks, setBookmarks } = useAppContext();
+  const dispatch = useDispatch()
+  const bookmarks = useSelector(state => state.bookmarks.list)
 
   return (
     <header
@@ -26,11 +27,12 @@ function ArticleHeader({ title, author, link, img, snippet }) {
   }
 
   function handleClick(event) {
-    if (!event.target.closest(".card")) return;
+    if (!event.target.closest("header")) return;
+    console.log(bookmarks);
 
     const btnClassList = event.target.parentElement.classList;
-    const card = event.target.closest(".card");
-    const { link, img, title, snippet } = card.dataset;
+    const header = event.target.closest("header");
+    const { link, img, title, snippet } = header.dataset;
 
     if (event.target.parentElement instanceof HTMLButtonElement) {
       if (btnClassList.contains("marked")) {
@@ -46,22 +48,11 @@ function ArticleHeader({ title, author, link, img, snippet }) {
   }
 
   function addBookmark(link, img, title, snippet) {
-    setBookmarks((state) => {
-      let newState = [
-        ...state,
-        new BookmarkConstructor(link, img, title, snippet),
-      ];
-      localStorage.setItem("bookmarks", JSON.stringify(newState));
-      return newState;
-    });
+    dispatch({ type: "ADD_BOOKMARK", payload: [ new BookmarkConstructor(link, img, title, snippet) ]});
   }
 
   function deleteBookmark(link) {
-    setBookmarks((state) => {
-      let filteredState = state.filter((elem) => elem.link !== link);
-      localStorage.setItem("bookmarks", JSON.stringify(filteredState));
-      return filteredState;
-    });
+    dispatch({ type: "DELETE_BOOKMARK", payload: link })
   }
 }
 

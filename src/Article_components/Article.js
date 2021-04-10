@@ -1,14 +1,18 @@
 import { useEffect, createElement } from "react";
-import { useAppContext } from "../AppContext";
+import { useDispatch, useSelector } from "react-redux";
 
 import ArticleHeader from "./ArticleHeader";
 import ArticleTag from "./ArticleTag";
 
-function Article({ article, appMode }) {
-  const { searchResults } = useAppContext();
-  const [, setMode] = appMode;
+function Article({ article }) {
+  const dispatch = useDispatch();
+
+  const serp = useSelector((state) => state.serp.items);
+  const scrollPos = useSelector((state) => state.appMode.scrollPos);
+
   const page = document.querySelector(".main-container");
   const content = article.content.map((elem, index) => {
+    if (typeof elem === "string") return createElement("p", null, elem);
     if (elem.tag === "img") return createElement(elem.tag, elem.attrs);
     if (elem.tag === "br") return <br />;
     if (elem.tag === "hr") return <hr />;
@@ -23,7 +27,7 @@ function Article({ article, appMode }) {
   return (
     <div className="article-container">
       <article>
-        <button className="go-back-btn" onClick={goBack}>
+        <button className="go-back-btn btn btn-secondary" onClick={goBack}>
           Go Back
         </button>
         <ArticleHeader
@@ -39,10 +43,11 @@ function Article({ article, appMode }) {
   );
 
   function goBack() {
-    if (searchResults.serp.length !== 0) {
-      setMode(false);
+    page.scrollTo(0, scrollPos);
+    if (serp) {
+      dispatch({ type: "SEARCH_MODE" });
     } else {
-      setMode(null);
+      dispatch({ type: "EDITOR_MODE" });
     }
   }
 }

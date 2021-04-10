@@ -1,22 +1,18 @@
 import "./style.css";
+import { Provider } from "react-redux";
 
-import { useState } from "react";
-
+import { store } from "./Store/reducers";
 import BookmarkMenu from "./Bookmarks_components/BookmarkMenu";
 import MainContainer from "./MainContainer";
 
-import { AppContextProvider } from "./AppContext";
-
 function App() {
-  const appMode = useState(null);
-
   return (
-    <AppContextProvider>
-      <div className="row">
-        <MainContainer appMode={appMode} />
-        <BookmarkMenu appMode={appMode} />
-      </div>
-    </AppContextProvider>
+      <Provider store={store}>
+        <div className="row">
+          <MainContainer />
+          <BookmarkMenu />
+        </div>
+      </Provider>
   );
 }
 
