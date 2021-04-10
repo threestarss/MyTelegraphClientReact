@@ -20,8 +20,8 @@ function ErrorModal() {
     timeoutRef.current = setTimeout(() => {
       dispatch({ type: "ERROR_MODE" });
       errorRoot.removeChild(errorRef.current);
-    }, 4000);
-  }, []);
+    }, 3500);
+  }, [setShowError]);
 
   return createPortal(
     <div className="error" onClick={removeError}>
