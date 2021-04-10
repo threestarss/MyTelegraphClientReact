@@ -21,7 +21,7 @@ function ErrorModal() {
       dispatch({ type: "ERROR_MODE" });
       errorRoot.removeChild(errorRef.current);
     }, 3500);
-  }, [setShowError]);
+  }, []);
 
   return createPortal(
     <div className="error" onClick={removeError}>
