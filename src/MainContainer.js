@@ -25,11 +25,11 @@ function MainContainer() {
           handleSubmit={handleSearch}
           handleChange={handleSearchTargetChange}
         />
-        <Form
+        {/* <Form
           placeholder="URL of article..."
           handleSubmit={handleFetch}
           handleChange={handleFetchTargetChange}
-        />
+        /> */}
       </Header>
       {error && <ErrorModal />}
       <ContentContainer />

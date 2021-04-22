@@ -41,6 +41,13 @@ article
     padding: 0 18px
     text-align: center
     font-style: italic
+  h1
+    max-width: 700px
+    padding: 0 21px 12px
+    &:before
+      content: attr(data-placeholder)
+      font-style: italic
+      left: 15px
   h3
     max-width: 700px
     padding: 0 21px 12px
@@ -117,6 +124,11 @@ header.container-fluid
       color: #dc143c
 
 .article-container
+  display: flex
+  justify-content: center
+  width: 100%
+
+.editor-container
   display: flex
   justify-content: center
   width: 100%
@@ -259,11 +271,13 @@ header.container-fluid
   left: 44%
   bottom: 20px
 
-@media (min-width: 1200px)
-  h1
-    font-size: 2rem
-  .go-back-btn
-    left: 7%
+#toolbar
+  position: absolute
+  display: flex
+  justify-content: space-around
+  transition: opacity .2s ease .06s,transform .2s ease .06s,top .2s ease,left .2s ease
+  button
+    padding: 5px 5px
 
 @media (min-width: 1023px)
   $bookmarkheight: 140px
@@ -335,9 +349,18 @@ header.container-fluid
   .spinner-grow
     left: 37%
 
+  .ql-clipboard
+    display: none
+
   #parent
     padding-left: 24px
     padding-right: 0px
+
+@media (min-width: 1200px)
+  h1
+    font-size: 2rem
+  .go-back-btn
+    left: 7%
 
 @media (min-width: 1920px)
   .go-back-btn

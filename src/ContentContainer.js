@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Article from "./Article_components/Article";
 import CardContainer from "./Search_components/CardContainer";
 import Welcome from "./Welcome";
+import Editor from './Editor'
 
 import fetchSerp from "./fetchSerp";
 
@@ -16,7 +17,7 @@ function ContentContainer() {
   return (
     <main className="content-container container-fluid g-0">
       <div id="parent">
-        {mode === null && <Welcome />}
+        {mode === null && <Editor />}
         {mode === true && <Article article={data} />}
         {mode === false && <CardContainer />}
         {mode === false && (

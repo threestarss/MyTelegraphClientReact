@@ -7,12 +7,12 @@ import MainContainer from "./MainContainer";
 
 function App() {
   return (
-      <Provider store={store}>
-        <div className="row">
-          <MainContainer />
-          <BookmarkMenu />
-        </div>
-      </Provider>
+    <Provider store={store}>
+      <div className="row">
+        <MainContainer />
+        <BookmarkMenu />
+      </div>
+    </Provider>
   );
 }
 
