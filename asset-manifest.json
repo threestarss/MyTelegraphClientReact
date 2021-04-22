@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/my-telegraph-client-react/static/css/main.86ac1099.chunk.css",
-    "main.js": "/my-telegraph-client-react/static/js/main.5c9f0499.chunk.js",
-    "main.js.map": "/my-telegraph-client-react/static/js/main.5c9f0499.chunk.js.map",
-    "runtime-main.js": "/my-telegraph-client-react/static/js/runtime-main.f5112f1b.js",
-    "runtime-main.js.map": "/my-telegraph-client-react/static/js/runtime-main.f5112f1b.js.map",
-    "static/js/2.857635f8.chunk.js": "/my-telegraph-client-react/static/js/2.857635f8.chunk.js",
-    "static/js/2.857635f8.chunk.js.map": "/my-telegraph-client-react/static/js/2.857635f8.chunk.js.map",
-    "index.html": "/my-telegraph-client-react/index.html",
-    "static/css/main.86ac1099.chunk.css.map": "/my-telegraph-client-react/static/css/main.86ac1099.chunk.css.map",
-    "static/js/2.857635f8.chunk.js.LICENSE.txt": "/my-telegraph-client-react/static/js/2.857635f8.chunk.js.LICENSE.txt"
+    "main.css": "/MyTelegraphClientReact/static/css/main.f3b05ddb.chunk.css",
+    "main.js": "/MyTelegraphClientReact/static/js/main.2c1f9f22.chunk.js",
+    "main.js.map": "/MyTelegraphClientReact/static/js/main.2c1f9f22.chunk.js.map",
+    "runtime-main.js": "/MyTelegraphClientReact/static/js/runtime-main.ef7d5519.js",
+    "runtime-main.js.map": "/MyTelegraphClientReact/static/js/runtime-main.ef7d5519.js.map",
+    "static/js/2.2ce077cf.chunk.js": "/MyTelegraphClientReact/static/js/2.2ce077cf.chunk.js",
+    "static/js/2.2ce077cf.chunk.js.map": "/MyTelegraphClientReact/static/js/2.2ce077cf.chunk.js.map",
+    "index.html": "/MyTelegraphClientReact/index.html",
+    "static/css/main.f3b05ddb.chunk.css.map": "/MyTelegraphClientReact/static/css/main.f3b05ddb.chunk.css.map",
+    "static/js/2.2ce077cf.chunk.js.LICENSE.txt": "/MyTelegraphClientReact/static/js/2.2ce077cf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f5112f1b.js",
-    "static/js/2.857635f8.chunk.js",
-    "static/css/main.86ac1099.chunk.css",
-    "static/js/main.5c9f0499.chunk.js"
+    "static/js/runtime-main.ef7d5519.js",
+    "static/js/2.2ce077cf.chunk.js",
+    "static/css/main.f3b05ddb.chunk.css",
+    "static/js/main.2c1f9f22.chunk.js"
   ]
 }
