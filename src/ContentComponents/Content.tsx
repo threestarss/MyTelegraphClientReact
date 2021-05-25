@@ -4,11 +4,11 @@ import Editor from "./Editor";
 
 const Content = () => {
   return (
-    <div>
+    <>
       <Article />
       <Search />
       <Editor />
-    </div>
+    </>
   );
 };
 
