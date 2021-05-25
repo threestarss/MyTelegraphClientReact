@@ -5,7 +5,7 @@ import User from "./UserComponents/User";
 import Content from "./ContentComponents/Content";
 import Bookmarks from "./BookmarksComponents/Bookmarks";
 
-export default function App() {
+const App = () => {
   return (
     <Provider store={store}>
       <User />
@@ -13,4 +13,6 @@ export default function App() {
       <Bookmarks />
     </Provider>
   );
-}
+};
+
+export default App;

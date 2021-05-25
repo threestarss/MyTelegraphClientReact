@@ -1,3 +1,5 @@
-export default function Bookmarks() {
+const Bookmarks = () => {
   return <></>;
-}
+};
+
+export default Bookmarks;
