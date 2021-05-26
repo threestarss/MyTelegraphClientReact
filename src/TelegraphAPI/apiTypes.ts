@@ -1,11 +1,13 @@
-export type Node = 'string' | NodeElement
-export interface NodeElement {
-  tag: string;
+import { ElementType } from 'react'
+
+export type ArticleNode = 'string' | ArticleNodeElement
+export interface ArticleNodeElement {
+  tag: ElementType;
   attrs?: {
     href?: string
     src?: string
   }
-  children?: Array<Node>
+  children?: Array<ArticleNode>
 }
 
 export interface Page {
@@ -16,7 +18,7 @@ export interface Page {
   author_name?: string,
   author_url?: string,
   image_url?: string,
-  content?: Array<Node>,
+  content?: Array<ArticleNode>,
   views: number,
   can_edit?: boolean
 }

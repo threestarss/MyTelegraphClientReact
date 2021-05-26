@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import { Page } from '../TelegraphAPI/apiTypes'
 
 import appStateReducer from '../appStateReducer';
 import bookmarksReducer from '../Bookmarks/bookmarksReducer';
@@ -22,7 +23,7 @@ export interface RootState {
     scrollPos: number
   },
   userInfo: {},
-  article: {},
+  article: Page,
   search: {},
   bookmarks: []
 }

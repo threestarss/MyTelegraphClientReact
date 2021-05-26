@@ -1,3 +1,5 @@
+import { Typography } from "@material-ui/core";
+
 import telegraphAPI from "../../TelegraphAPI/telegraphAPI";
 
 const nodeString =
@@ -76,10 +78,10 @@ export const TestArticle = () => {
             eveniet suscipit.
           </li>
         </ol>
-        <p>
+        <Typography component="blockquote">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
           aspernatur.
-        </p>
+        </Typography>
         <pre>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti,
           vel?
