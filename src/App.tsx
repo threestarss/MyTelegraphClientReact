@@ -1,9 +1,9 @@
 import { Provider } from "react-redux";
 import { store } from "./Store/store";
 
-import User from "./UserComponents/User";
-import Content from "./ContentComponents/Content";
-import Bookmarks from "./BookmarksComponents/Bookmarks";
+import User from "./User/User";
+import Content from "./Content/Content";
+import Bookmarks from "./Bookmarks/Bookmarks";
 
 const App = () => {
   return (

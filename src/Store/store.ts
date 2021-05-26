@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 
 import appStateReducer from '../appStateReducer';
-import bookmarksReducer from '../BookmarksComponents/bookmarksReducer';
-import articleReducer from '../ContentComponents/articleReducer';
-import searchReducer from '../ContentComponents/searchReducer';
-import userInfoReducer from '../UserComponents/userInfoReducer';
+import bookmarksReducer from '../Bookmarks/bookmarksReducer';
+import articleReducer from '../Content/Article/articleReducer';
+import searchReducer from '../Content/Search/searchReducer';
+import userInfoReducer from '../User/userInfoReducer';
 
 const rootReducer = combineReducers({
   appState: appStateReducer,
@@ -15,5 +15,16 @@ const rootReducer = combineReducers({
 })
 
 export const store = createStore(rootReducer);
+
+export interface RootState {
+  appState: {
+    contentMode: 'article' | 'search' | 'editor',
+    scrollPos: number
+  },
+  userInfo: {},
+  article: {},
+  search: {},
+  bookmarks: []
+}
 
 store.subscribe(() => localStorage.setItem("bookmarks", JSON.stringify(store.getState().bookmarks)))
