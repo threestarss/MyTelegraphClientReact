@@ -19,7 +19,7 @@ export type UserInfoActionType = 'LOGIN' | "LOGOUT";
 export type UserInfoActionPayload = {};
 export type UserInfoActionObject = Action<UserInfoActionType, UserInfoActionPayload>;
 
-export type AppStateActionType = ArticleActionType | SearchActionType | 'EDITOR_MODE' | 'SET_SCROLL_POS';
+export type AppStateActionType = ArticleActionType | SearchActionType | 'EDITOR_MODE' | 'SET_SCROLL_POS' | "SET_ERROR";
 export type AppStateActionPayload = {};
 export type AppStateActionObject = Action<AppStateActionType, AppStateActionPayload>;
 

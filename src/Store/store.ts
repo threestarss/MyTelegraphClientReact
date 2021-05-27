@@ -21,6 +21,7 @@ export interface RootState {
   appState: {
     contentMode: 'article' | 'search' | 'editor',
     scrollPos: number
+    error: string
   },
   userInfo: {},
   article: Page,
