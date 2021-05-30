@@ -1,5 +1,7 @@
+import { Box } from "@material-ui/core";
+
 const Bookmarks = () => {
-  return <></>;
+  return <Box></Box>;
 };
 
 export default Bookmarks;
