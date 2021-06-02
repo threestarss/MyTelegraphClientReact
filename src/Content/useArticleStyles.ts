@@ -3,23 +3,25 @@ import { makeStyles } from '@material-ui/core'
 // the goal was to copy the original telegra.ph styling
 
 // TODO: set line height, font size as default in typography object: https://material-ui.com/customization/default-theme/
-export const useArticleStyles = makeStyles({
+export const useArticleStyles = makeStyles(theme => ({
   root: {
-    fontSize: '18px',
-    lineHeight: '1.58',
     '& h1, h2, h3, h4, h5': {
-      fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;'
+      fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;',
+      margin: "18px 21px 9px"
     },
     '& p': {
       margin: '0 21px 12px',
       wordWrap: 'break-word'
+    },
+    '& a': {
+      color: theme.palette.text.primary,
     },
     '& blockquote': {
       fontStyle: 'italic',
       margin: '18px 21px 16px 0',
       paddingLeft: '15px',
       wordWrap: 'break-word',
-      borderLeft: '3px solid #000'
+      borderLeft: `3px solid ${theme.palette.text.primary}`
     },
     '& ol': {
       margin: '21px',
@@ -67,20 +69,23 @@ export const useArticleStyles = makeStyles({
     },
     '& pre': {
       fontFamily: 'Menlo,"Courier New",Courier,monospace',
-      fontSize: '16px',
-      background: '#F5F8FC',
+      fontSize: '1rem',
+      background: '#222',
       margin: '14px 0',
       padding: '7px 21px',
       wordWrap: 'break-word'
     },
     '& code': {
       fontFamily: 'Menlo,"Courier New",Courier,monospace',
-      fontSize: '16px',
-      background: '#F5F8FC',
+      fontSize: '1rem',
+      background: '#222',
     },
     '& hr': {
       margin: '30px auto',
       width: '50%',
+    },
+    '& aside': {
+      fontSize: '1,3125rem'
     }
   }
-})
+}))

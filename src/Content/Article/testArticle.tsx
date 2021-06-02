@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography, Paper } from "@material-ui/core";
 import { useArticleStyles } from "../useArticleStyles";
 
 import telegraphAPI from "../../TelegraphAPI/telegraphAPI";
@@ -11,7 +11,7 @@ export const TestArticle = () => {
   return (
     <>
       <button onClick={handleClick}>TESTING</button>
-      <article className={classes.root}>
+      <Paper component="article" elevation={3} classes={classes}>
         <p>
           <a href="leessgooo">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, eius.
@@ -108,7 +108,7 @@ export const TestArticle = () => {
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, iusto!
         </p>
-      </article>
+      </Paper>
     </>
   );
 

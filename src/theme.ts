@@ -18,7 +18,21 @@ export const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: 'CustomSerif,Georgia,Cambria,"Times New Roman",serif'
+    fontFamily: 'CustomSerif,Georgia,Cambria,"Times New Roman",serif',
+    fontSize: 18,
+    body2: {
+      lineHeight: 1.58
+    }
+  },
+  palette: {
+    type: "dark",
+    text: {
+      primary: '#f8f9fa'
+    },
+    background: {
+      default: "#212529",
+      paper: "#333"
+    }
   }
 })
 

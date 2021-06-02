@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 import { RootState } from "../../Store/store";
 import { ArticleElement } from "./ArticleElement";
 import { useArticleStyles } from "../useArticleStyles";
@@ -14,13 +15,13 @@ const Article = () => {
       {!article.content ? (
         <TestArticle />
       ) : (
-        <article className={classes.root}>
+        <Paper component="article" elevation={3} classes={classes}>
           {article.content.map((node) => {
             if (typeof node === "string")
               return <ArticleElement tag="p" children={[node]} />;
             return <ArticleElement {...node} />;
           })}
-        </article>
+        </Paper>
       )}
     </>
   );
