@@ -1,6 +1,7 @@
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk'
 import { Page } from '../TelegraphAPI/apiTypes'
-
 import appStateReducer from '../appStateReducer';
 import bookmarksReducer from '../Bookmarks/bookmarksReducer';
 import articleReducer from '../Content/Article/articleReducer';
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
   bookmarks: bookmarksReducer
 })
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export interface RootState {
   appState: {

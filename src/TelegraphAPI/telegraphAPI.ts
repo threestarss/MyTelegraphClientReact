@@ -38,11 +38,10 @@ class TelegraphAPI {
     let methodUrl = this.makeUrlObj('/getPage');
     let target = methodUrl.toString() + link.pathname;
     try {
-      // TODO: there is a bug with string concatenation of urls, need to check this method
       const response = await fetch(target + this.returnContentFlag);
-      const result = await response.json();
-      if (!result.ok) throw new Error(result.error)
-      return result;
+      const responseToJSON = await response.json();
+      if (!responseToJSON.ok) throw new Error(responseToJSON.error)
+      return responseToJSON.result;
     } catch (err) {
       console.error(err);
     }

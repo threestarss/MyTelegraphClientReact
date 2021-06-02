@@ -19,8 +19,8 @@ export const theme = createMuiTheme({
   },
   typography: {
     fontFamily: 'CustomSerif,Georgia,Cambria,"Times New Roman",serif',
-    fontSize: 18,
-    body2: {
+    body1: {
+      fontSize: 18,
       lineHeight: 1.58
     }
   },

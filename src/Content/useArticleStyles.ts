@@ -7,7 +7,25 @@ export const useArticleStyles = makeStyles(theme => ({
   root: {
     '& h1, h2, h3, h4, h5': {
       fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;',
-      margin: "18px 21px 9px"
+      fontWeight: "700",
+      margin: "18px 21px 9px",
+    },
+    '& address': {
+      fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;',
+      color: "#ddd",
+      margin: '12px 21px',
+      fontSize: '0.9375rem',
+      fontStyle: 'normal',
+      '& > a': {
+        textDecoration: 'none',
+        color: "#ddd",
+      }
+    },
+    '& h1': {
+      fontSize: '2rem'
+    },
+    '& h3, h4': {
+      fontSize: "1.75rem",
     },
     '& p': {
       margin: '0 21px 12px',
@@ -85,7 +103,15 @@ export const useArticleStyles = makeStyles(theme => ({
       width: '50%',
     },
     '& aside': {
-      fontSize: '1,3125rem'
+      fontSize: '1.3125rem',
+      fontStyle: 'italic',
+      textAlign: 'center',
+    },
+    '& figure': {
+      margin: "0 21px 16px"
+    },
+    '& img': {
+      maxWidth: '690px',
     }
   }
 }))
