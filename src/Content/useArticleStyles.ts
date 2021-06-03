@@ -33,6 +33,8 @@ export const useArticleStyles = makeStyles(theme => ({
     },
     '& a': {
       color: theme.palette.text.primary,
+      fontSize: "inherit",
+      fontFamily: "inherit"
     },
     '& blockquote': {
       fontStyle: 'italic',
@@ -103,6 +105,8 @@ export const useArticleStyles = makeStyles(theme => ({
       width: '50%',
     },
     '& aside': {
+      margin: '18px 21px 16px',
+      padding: '0 18px',
       fontSize: '1.3125rem',
       fontStyle: 'italic',
       textAlign: 'center',

@@ -15,7 +15,7 @@ const Content = () => {
   const dispatch = useDispatch();
   // fetching a test article, don't forget to clean this up.
   useEffect(() => {
-    let testArticle = new URL("https://telegra.ph/Statya-05-01-2");
+    let testArticle = new URL("https://telegra.ph/Poisk-v-telegraph-03-24");
     // TODO: refactor async dispatchers
     dispatch(async (dispatch: any) => {
       let result = await telegraphAPI.getPage(testArticle);
