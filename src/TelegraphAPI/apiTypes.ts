@@ -1,38 +1,40 @@
-import { ElementType } from 'react'
+import { ElementType } from "react";
 
-export type ArticleNode = 'string' | ArticleNodeElement
+export type ArticleNode = "string" | ArticleNodeElement;
 export interface ArticleNodeElement {
   tag: ElementType;
   attrs?: {
-    href?: string
-    src?: string
-  }
-  children?: Array<ArticleNode>
+    href?: string;
+    src?: string;
+  };
+  children?: Array<ArticleNode>;
+  // TODO: maybe property below should be defined in extended interface inside Article component
+  elemKey?: number | string;
 }
 
 export interface Page {
-  path: string,
-  url: string,
-  title: string,
-  description: string,
-  author_name?: string,
-  author_url?: string,
-  image_url?: string,
-  content?: Array<ArticleNode>,
-  views: number,
-  can_edit?: boolean
+  path: string;
+  url: string;
+  title: string;
+  description: string;
+  author_name?: string;
+  author_url?: string;
+  image_url?: string;
+  content?: Array<ArticleNode>;
+  views: number;
+  can_edit?: boolean;
 }
 
 export interface PageList {
-  total_count: number,
-  pages: Array<Page>
+  total_count: number;
+  pages: Array<Page>;
 }
 
 export interface Account {
-  short_name: string,
-  author_name: string,
-  author_url: string,
-  access_token?: string,
-  auth_url?: string,
-  page_count?: number
+  short_name: string;
+  author_name: string;
+  author_url: string;
+  access_token?: string;
+  auth_url?: string;
+  page_count?: number;
 }

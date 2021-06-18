@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 
 // the goal was to copy the original telegra.ph styling
-
-// TODO: set line height, font size as default in typography object: https://material-ui.com/customization/default-theme/
 export const useArticleStyles = makeStyles(theme => ({
   root: {
     '& h1, h2, h3, h4, h5': {

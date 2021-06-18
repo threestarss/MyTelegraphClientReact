@@ -18,8 +18,15 @@ const Article = () => {
       />
       {article.content.map((node, index) => {
         if (typeof node === "string")
-          return <ArticleElement tag="p" children={[node]} key={index} />;
-        return <ArticleElement {...node} key={index} />;
+          return (
+            <ArticleElement
+              tag="p"
+              children={[node]}
+              elemKey={index}
+              key={index}
+            />
+          );
+        return <ArticleElement {...node} elemKey={index} key={index} />;
       })}
     </Paper>
   );

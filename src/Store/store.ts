@@ -8,7 +8,7 @@ import articleReducer from '../Content/Article/articleReducer';
 import searchReducer from '../Content/Search/searchReducer';
 import userInfoReducer from '../User/userInfoReducer';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   appState: appStateReducer,
   userInfo: userInfoReducer,
   article: articleReducer,

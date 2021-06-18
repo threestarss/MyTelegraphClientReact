@@ -2,10 +2,12 @@ import { Typography } from "@material-ui/core";
 
 import { ArticleNodeElement } from "../../TelegraphAPI/apiTypes";
 
+// maybe i shouldn't use typography conmponent
 export const ArticleElement = ({
   tag,
   attrs,
   children,
+  elemKey,
 }: ArticleNodeElement) => {
   if (tag === "br") return <br />;
   if (tag === "hr") return <hr />;
@@ -14,11 +16,11 @@ export const ArticleElement = ({
   if (tag === "iframe" && attrs)
     return <iframe {...attrs} src={urlFix(attrs.src)} title="title" />;
   return (
-    <Typography component={tag} {...attrs}>
+    <Typography component={tag} {...attrs} key={elemKey}>
       {children &&
         children.map((node, index) => {
           if (typeof node === "string") return node;
-          return <ArticleElement {...node} key={index * 111} />;
+          return <ArticleElement {...node} key={elemKey + "-" + index} />;
         })}
     </Typography>
   );
