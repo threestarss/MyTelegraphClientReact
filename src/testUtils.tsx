@@ -3,7 +3,7 @@ import { render as rtlRender } from "@testing-library/react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 // Import your own reducer
-import { rootReducer } from "../../../Store/store";
+import { rootReducer } from "./Store/store";
 
 interface Props {
   children: React.ReactNode;
