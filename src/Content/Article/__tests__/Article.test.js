@@ -3,7 +3,7 @@ import { render } from "../../../testUtils";
 import Article from "../Article";
 import { mockArticle, bookmark } from "../mockArticle";
 
-let bookmarks, article, header, bookmarkBtn;
+let bookmarks, article, header, bookmarkButton;
 
 beforeAll(() => {
   let [, useSelector] = render(<Article />, {
@@ -11,8 +11,8 @@ beforeAll(() => {
   });
   article = document.querySelector("article");
   header = document.querySelector("header");
-  bookmarkBtn = document.querySelector(".bookmark-btn");
-  bookmarkBtn.click();
+  bookmarkButton = document.querySelector("button");
+  bookmarkButton.click();
   bookmarks = useSelector((state) => state.bookmarks);
 });
 
@@ -39,14 +39,15 @@ describe("component rendering tests", () => {
 });
 
 describe("header functionality tests", () => {
-  it("bookmark button should change color after getting clicked", () => {
-    expect(bookmarkBtn).toHaveClass("clicked");
+  it("bookmark button should change color after click", () => {
+    let buttonIcon = bookmarkButton.querySelector("svg");
+    expect(buttonIcon).toHaveStyle({ color: "rgb(220, 20, 60)" });
   });
   it("bookmark button should save article to bookmarks", () => {
     expect(bookmarks).toContainEqual(bookmark);
   });
   it("another click on bookmark button should remove bookmark from bookmarks", () => {
-    bookmarkBtn.click();
+    bookmarkButton.click();
     expect(bookmarks).not.toContainEqual(bookmark);
   });
 });

@@ -348,5 +348,5 @@ export const mockArticle = {
 export const bookmark = {
   url: mockArticle.url,
   title: mockArticle.title,
-  author_name: mockArticle.author_name,
+  image_url: undefined,
 };

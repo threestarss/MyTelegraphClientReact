@@ -15,6 +15,8 @@ const Article = () => {
         title={article.title}
         views={article.views}
         author_name={article.author_name}
+        url={article.url}
+        image_url={article.image_url}
       />
       {article.content.map((node, index) => {
         if (typeof node === "string")

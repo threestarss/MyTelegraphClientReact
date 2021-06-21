@@ -1,47 +1,114 @@
-import { BookmarksPayload, BookmarksActionObject } from './actionTypes';
-import { ArticleActionPayload, ArticleActionObject } from './actionTypes';
-import { SearchActionPayload, SearchActionObject } from './actionTypes';
-import { UserInfoActionPayload, UserInfoActionObject } from './actionTypes';
+import { bindActionCreators } from "redux";
+import { store } from "./store";
+import { BookmarksPayload, BookmarksActionObject } from "./actionTypes";
+import { ArticleActionObject } from "./actionTypes";
+import { SearchActionObject } from "./actionTypes";
+import { UserInfoActionPayload, UserInfoActionObject } from "./actionTypes";
+import telegraphAPI from "../TelegraphAPI/telegraphAPI";
+import { Page } from "../TelegraphAPI/apiTypes";
 
-// TODO: to think:
-// 1. Maybe action creators should be in reducers file
-// 2. Maybe I should make action creators like this: https://read.reduxbook.com/markdown/part1/04-action-creators.html
-
-export function addBookmark(payload: BookmarksPayload): BookmarksActionObject {
-  return { type: 'ADD_BOOKMARK', payload }
+function addBookmark(
+  url: string,
+  title: string,
+  image_url?: string
+): BookmarksActionObject {
+  return {
+    type: "ADD_BOOKMARK",
+    payload: {
+      url: url,
+      title: title,
+      image_url: image_url,
+    },
+  };
 }
 
-export function deleteBookmark(payload: BookmarksPayload): BookmarksActionObject {
-  return { type: 'DELETE_BOOKMARK', payload }
+function deleteBookmark(
+  url: string,
+  title: string,
+  image_url?: string
+): BookmarksActionObject {
+  return {
+    type: "DELETE_BOOKMARK",
+    payload: {
+      url: url,
+      title: title,
+      image_url: image_url,
+    },
+  };
 }
 
-export function loadBookmarks(payload: BookmarksPayload): BookmarksActionObject {
-  return { type: 'LOAD_BOOKMARKS_FROM_LOCAL_STORAGE', payload }
+function loadBookmarksFromLocalStorage(
+  payload: BookmarksPayload
+): BookmarksActionObject {
+  return { type: "LOAD_BOOKMARKS_FROM_LOCAL_STORAGE", payload };
 }
 
-export function articleMode(payload?: ArticleActionPayload): ArticleActionObject {
-  if (payload) return { type: 'ARTICLE_MODE', payload }
-  return { type: 'ARTICLE_MODE' }
+function setArticleMode(): ArticleActionObject {
+  return { type: "ARTICLE_MODE" };
 }
 
-export function searchMode(payload: SearchActionPayload): SearchActionObject {
-  return { type: "SEARCH_MODE", payload }
+function setSearchMode(): SearchActionObject {
+  return { type: "SEARCH_MODE" };
 }
 
-// TODO: make editor mode types
-export function editorMode(payload: {}) {
-  return { type: 'EDITOR_MODE', payload }
+function setEditorMode() {
+  return { type: "EDITOR_MODE" };
 }
 
-export function userLogin(payload: UserInfoActionPayload): UserInfoActionObject {
-  return { type: 'LOGIN', payload }
+// TODO: type this properly
+function fetchArticle(this: any, url: string) {
+  return async () => {
+    try {
+      let result = await telegraphAPI.getPage(new URL(url));
+      this.setContent(result);
+    } catch (err) {
+      this.setError(err);
+    }
+  };
 }
 
-export function userLogout(payload: UserInfoActionPayload): UserInfoActionObject {
-  return { type: 'LOGOUT', payload }
+function setArticleContent(article: Page) {
+  return { type: "ARTICLE_CONTENT_LOADED", payload: article };
 }
 
-//TODO: make setScrollPos types
-export function setScrollPos(payload: number) {
-  return { type: 'SET_SCROLL_POS', payload }
+function setError(error: Error) {
+  console.log(error);
 }
+
+function userLogin(payload: UserInfoActionPayload): UserInfoActionObject {
+  return { type: "LOGIN", payload };
+}
+
+function userLogout(payload: UserInfoActionPayload): UserInfoActionObject {
+  return { type: "LOGOUT", payload };
+}
+
+function setScrollPos(payload: number) {
+  return { type: "SET_SCROLL_POS", payload };
+}
+
+export const appModeActions = bindActionCreators(
+  {
+    setArticleMode,
+    setSearchMode,
+    setEditorMode,
+  },
+  store.dispatch
+);
+export const articleActions = bindActionCreators(
+  {
+    fetchArticle,
+    setContent: setArticleContent,
+    setError,
+  },
+  store.dispatch
+);
+export const bookmarkActions = bindActionCreators(
+  {
+    add: addBookmark,
+    delete: deleteBookmark,
+    loadFromLocalStorage: loadBookmarksFromLocalStorage,
+  },
+  store.dispatch
+);
+export const userActions = bindActionCreators({}, store.dispatch);

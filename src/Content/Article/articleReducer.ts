@@ -1,8 +1,13 @@
 import { ArticleActionObject } from "../../Store/actionTypes";
 
-export default function articleReducer (state = {}, action: ArticleActionObject) {
-  if (action.payload) {
-    return action.payload;
+export default function articleReducer(
+  state = {},
+  action: ArticleActionObject
+) {
+  switch (action.type) {
+    case "ARTICLE_CONTENT_LOADED":
+      return action.payload;
+    default:
+      return state;
   }
-  return state;
 }
