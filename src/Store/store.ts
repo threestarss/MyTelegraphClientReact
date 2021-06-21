@@ -39,6 +39,6 @@ export interface RootState {
   bookmarks: Bookmark[] | [];
 }
 
-store.subscribe(() =>
-  localStorage.setItem("bookmarks", JSON.stringify(store.getState().bookmarks))
-);
+store.subscribe(() => {
+  localStorage.setItem("bookmarks", JSON.stringify(store.getState().bookmarks));
+});

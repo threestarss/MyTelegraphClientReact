@@ -22,10 +22,10 @@ function render(
   function Wrapper({ children }: Props) {
     return <Provider store={store}>{children}</Provider>;
   }
-  function useSelector(callback: any) {
-    return callback(store.getState());
+  function getState() {
+    return store.getState();
   }
-  return [rtlRender(ui, { wrapper: Wrapper, ...renderOptions }), useSelector];
+  return [rtlRender(ui, { wrapper: Wrapper, ...renderOptions }), getState];
 }
 
 // re-export everything

@@ -28,7 +28,6 @@ const BookmarkButton = ({
   );
   function handleClick() {
     if (!marked) {
-      // TODO: REFACTOR ACTION CREATORS they are awful
       bookmarkActions.add(url, title, image_url);
     } else {
       bookmarkActions.delete(url, title, image_url);

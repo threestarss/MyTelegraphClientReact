@@ -24,16 +24,16 @@ export const ArticleHeader = ({
   let marked = bookmarks.some((bookmark) => bookmark.url === url);
   return (
     <header>
+      <Typography component="h1">{title}</Typography>
+      <address>
+        <a href={author_url || "#"}>{author_name}</a> | Просмотры: {views}
+      </address>
       <BookmarkButton
         url={url}
         title={title}
         image_url={image_url}
         marked={marked}
       />
-      <Typography component="h1">{title}</Typography>
-      <address>
-        <a href={author_url || "#"}>{author_name}</a> | Просмотры: {views}
-      </address>
     </header>
   );
 };
