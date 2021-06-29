@@ -4,11 +4,12 @@ interface TelegraphAPI {
   returnContentFlag: string;
 }
 
+//TODO: needs a refactor
+
 class TelegraphAPI {
   constructor() {
     this.url = "https://api.telegra.ph";
     this.token = "";
-    // TODO: give it a better name maybe
     this.returnContentFlag = "?return_content=true";
   }
 

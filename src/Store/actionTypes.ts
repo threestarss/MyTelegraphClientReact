@@ -23,7 +23,10 @@ export type ArticleActionObject = Action<
   ArticleActionPayload
 >;
 
-export type SearchActionType = "SEARCH_MODE";
+export type SearchActionType =
+  | "SEARCH_MODE"
+  | "SERP_LOADED"
+  | "SERP_LOADED_MORE_RESULTS";
 export type SearchActionPayload = {};
 export type SearchActionObject = Action<SearchActionType, SearchActionPayload>;
 

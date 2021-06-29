@@ -2,6 +2,7 @@ import { applyMiddleware, createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { Page } from "../TelegraphAPI/apiTypes";
+import { SearchResult } from "../GoogleSearchAPI/apiTypes";
 import appStateReducer from "../appStateReducer";
 import bookmarksReducer from "../Bookmarks/bookmarksReducer";
 import articleReducer from "../Content/Article/articleReducer";
@@ -35,7 +36,7 @@ export interface RootState {
   };
   userInfo: {};
   article: Page;
-  search: {};
+  search: SearchResult;
   bookmarks: Bookmark[] | [];
 }
 

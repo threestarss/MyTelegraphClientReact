@@ -5,7 +5,9 @@ import { ArticleActionObject } from "./actionTypes";
 import { SearchActionObject } from "./actionTypes";
 import { UserInfoActionPayload, UserInfoActionObject } from "./actionTypes";
 import telegraphAPI from "../TelegraphAPI/telegraphAPI";
+import googleSearchAPI from "../GoogleSearchAPI/googleSearchAPI";
 import { Page } from "../TelegraphAPI/apiTypes";
+import { SearchResult } from "../GoogleSearchAPI/apiTypes";
 
 function addBookmark(
   url: string,
@@ -15,7 +17,7 @@ function addBookmark(
   return {
     type: "ADD_BOOKMARK",
     payload: {
-      url: url,
+      url: url.toLowerCase(),
       title: title,
       image_url: image_url,
     },
@@ -59,8 +61,8 @@ function setEditorMode() {
 function fetchArticle(this: any, url: string) {
   return async () => {
     try {
-      let result = await telegraphAPI.getPage(new URL(url));
-      this.setContent(result);
+      const result = await telegraphAPI.getPage(new URL(url));
+      this.setArticleContent(result);
     } catch (err) {
       this.setError(err);
     }
@@ -69,6 +71,21 @@ function fetchArticle(this: any, url: string) {
 
 function setArticleContent(article: Page) {
   return { type: "ARTICLE_CONTENT_LOADED", payload: article };
+}
+
+function fetchSearch(this: any, query: string) {
+  return async () => {
+    try {
+      const result = await googleSearchAPI.search(query);
+      this.setSearchResult(result);
+    } catch (err) {
+      this.setError(err);
+    }
+  };
+}
+
+function setSearchResult(serp: SearchResult) {
+  return { type: "SERP_LOADED", payload: serp };
 }
 
 function setError(error: Error) {
@@ -95,14 +112,25 @@ export const appModeActions = bindActionCreators(
   },
   store.dispatch
 );
+
 export const articleActions = bindActionCreators(
   {
     fetchArticle,
-    setContent: setArticleContent,
+    setArticleContent,
     setError,
   },
   store.dispatch
 );
+
+export const searchActions = bindActionCreators(
+  {
+    fetchSearch,
+    setSearchResult,
+    setError,
+  },
+  store.dispatch
+);
+
 export const bookmarkActions = bindActionCreators(
   {
     add: addBookmark,
@@ -111,4 +139,5 @@ export const bookmarkActions = bindActionCreators(
   },
   store.dispatch
 );
+
 export const userActions = bindActionCreators({}, store.dispatch);

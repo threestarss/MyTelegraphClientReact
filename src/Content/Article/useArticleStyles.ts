@@ -1,0 +1,120 @@
+import { makeStyles } from "@material-ui/core";
+
+// the goal was to copy the original telegra.ph styling
+export const useArticleStyles = makeStyles((theme) => ({
+  root: {
+    position: "relative",
+    "& h1, h2, h3, h4, h5": {
+      fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;',
+      fontWeight: "700",
+      margin: "18px 21px 9px",
+    },
+    "& address": {
+      fontFamily: 'CustomSansSerif,"Lucida Grande",Arial,sans-serif;',
+      color: "#ddd",
+      margin: "12px 21px",
+      fontSize: "0.9375rem",
+      fontStyle: "normal",
+      "& > a": {
+        textDecoration: "none",
+        color: "#ddd",
+      },
+    },
+    "& h1": {
+      fontSize: "2rem",
+    },
+    "& h3, h4": {
+      fontSize: "1.75rem",
+    },
+    "& p": {
+      margin: "0 21px 12px",
+      wordWrap: "break-word",
+    },
+    "& a": {
+      color: theme.palette.text.primary,
+      fontSize: "inherit",
+      fontFamily: "inherit",
+    },
+    "& blockquote": {
+      fontStyle: "italic",
+      margin: "18px 21px 16px 0",
+      paddingLeft: "15px",
+      wordWrap: "break-word",
+      borderLeft: `3px solid ${theme.palette.text.primary}`,
+    },
+    "& ol": {
+      margin: "21px",
+      padding: 0,
+      listStyle: "none",
+      counterReset: "list",
+      "& li": {
+        marginLeft: "30px",
+        marginBottom: "14px",
+        padding: 0,
+        "&:before": {
+          position: "absolute",
+          display: "inline-block",
+          boxSizing: "border-box",
+          width: "78px",
+          margin: "0 0 0 -78px",
+          textAlign: "right",
+          "-webkit-font-feature-settings": '"liga" on,"lnum" on',
+          paddingRight: "12px",
+          counterIncrement: "list",
+          content: 'counter(list) "."',
+        },
+      },
+    },
+    "& ul": {
+      margin: "21px",
+      padding: 0,
+      listStyle: "none",
+      counterReset: "list",
+      "& li": {
+        marginLeft: "30px",
+        marginBottom: "14px",
+        padding: 0,
+        "&:before": {
+          position: "absolute",
+          display: "inline-block",
+          boxSizing: "border-box",
+          width: "78px",
+          margin: "0 0 0 -78px",
+          textAlign: "right",
+          padding: "1px 15px 0 0",
+          content: '"•"',
+        },
+      },
+    },
+    "& pre": {
+      fontFamily: 'Menlo,"Courier New",Courier,monospace',
+      fontSize: "1rem",
+      background: "#222",
+      margin: "14px 0",
+      padding: "7px 21px",
+      wordWrap: "break-word",
+    },
+    "& code": {
+      fontFamily: 'Menlo,"Courier New",Courier,monospace',
+      fontSize: "1rem",
+      background: "#222",
+    },
+    "& hr": {
+      margin: "30px auto",
+      width: "50%",
+    },
+    "& aside": {
+      margin: "18px 21px 16px",
+      padding: "0 18px",
+      fontSize: "1.3125rem",
+      fontStyle: "italic",
+      textAlign: "center",
+    },
+    "& figure": {
+      margin: "0 21px 16px",
+    },
+    "& img": {
+      maxWidth: "690px",
+    },
+  },
+}));
