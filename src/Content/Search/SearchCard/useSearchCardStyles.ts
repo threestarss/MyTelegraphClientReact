@@ -11,4 +11,11 @@ export const useSearchCardStyles = makeStyles({
     height: "150px",
     objectFit: "cover",
   },
+  buttonBase: {
+    justifyContent: "start",
+    textAlign: "initial",
+    lineHeight: 1.58,
+    flexDirection: "column",
+    height: "410px",
+  },
 });

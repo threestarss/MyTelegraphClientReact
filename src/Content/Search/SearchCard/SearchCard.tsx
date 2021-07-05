@@ -1,5 +1,11 @@
 import { useSelector } from "react-redux";
-import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
+import {
+  ButtonBase,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@material-ui/core";
 import { useSearchCardStyles } from "./useSearchCardStyles";
 import BookmarkButton from "../../../Bookmarks/BookmarkButton";
 import { RootState } from "../../../Store/store";
@@ -25,23 +31,25 @@ const SearchCard = ({
   let marked = bookmarks.some((bookmark) => bookmark.url === url);
   return (
     <Card className={classes.root} onClick={handleClick}>
-      <BookmarkButton
-        url={url}
-        title={title}
-        image_url={thumbnail || image || ""}
-        marked={marked}
-        position={{ top: "0px", right: "0px" }}
-      />
-      <CardMedia
-        className={classes.img}
-        component="img"
-        src={thumbnail || image || ""}
-      ></CardMedia>
-      <CardContent>
-        <Typography variant="h5">{title}</Typography>
-        <br></br>
-        <Typography variant="body2">{snippet}</Typography>
-      </CardContent>
+      <ButtonBase className={classes.buttonBase}>
+        <BookmarkButton
+          url={url}
+          title={title}
+          image_url={thumbnail || image || ""}
+          marked={marked}
+          position={{ top: "0px", right: "0px" }}
+        />
+        <CardMedia
+          className={classes.img}
+          component="img"
+          src={thumbnail || image || ""}
+        ></CardMedia>
+        <CardContent>
+          <Typography variant="h5">{title}</Typography>
+          <br></br>
+          <Typography variant="body2">{snippet}</Typography>
+        </CardContent>
+      </ButtonBase>
     </Card>
   );
 
