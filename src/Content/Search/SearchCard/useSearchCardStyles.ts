@@ -4,18 +4,18 @@ export const useSearchCardStyles = makeStyles({
   root: {
     position: "relative",
     width: "228px",
-    height: "410px",
+    height: "407px",
     margin: "0 8px 12px",
   },
   img: {
+    flexShrink: 0,
     height: "150px",
-    objectFit: "cover",
   },
   buttonBase: {
     justifyContent: "start",
     textAlign: "initial",
     lineHeight: 1.58,
     flexDirection: "column",
-    height: "410px",
+    height: "100%",
   },
 });
