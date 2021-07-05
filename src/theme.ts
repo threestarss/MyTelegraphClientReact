@@ -23,6 +23,15 @@ export const theme = createMuiTheme({
       fontSize: 18,
       lineHeight: 1.58,
     },
+    body2: {
+      fontSize: "1rem",
+      lineHeight: 1.58,
+    },
+    h5: {
+      fontSize: "1.25rem",
+      lineHeight: 1.58,
+      fontWeight: "bold",
+    },
   },
   palette: {
     type: "dark",

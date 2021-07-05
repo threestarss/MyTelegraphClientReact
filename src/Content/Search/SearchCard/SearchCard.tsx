@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Card, CardContent, CardMedia } from "@material-ui/core";
+import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { useSearchCardStyles } from "./useSearchCardStyles";
 import BookmarkButton from "../../../Bookmarks/BookmarkButton";
 import { RootState } from "../../../Store/store";
@@ -8,11 +8,18 @@ import { articleActions, appModeActions } from "../../../Store/actionCreators";
 interface SearchCardProps {
   title: string;
   url: string;
+  snippet: string;
   thumbnail?: string;
   image?: string;
 }
 
-const SearchCard = ({ title, url, thumbnail, image }: SearchCardProps) => {
+const SearchCard = ({
+  title,
+  url,
+  snippet,
+  thumbnail,
+  image,
+}: SearchCardProps) => {
   const classes = useSearchCardStyles();
   const bookmarks = useSelector((state: RootState) => state.bookmarks);
   let marked = bookmarks.some((bookmark) => bookmark.url === url);
@@ -30,7 +37,11 @@ const SearchCard = ({ title, url, thumbnail, image }: SearchCardProps) => {
         component="img"
         src={thumbnail || image || ""}
       ></CardMedia>
-      <CardContent>{title}</CardContent>
+      <CardContent>
+        <Typography variant="h5">{title}</Typography>
+        <br></br>
+        <Typography variant="body2">{snippet}</Typography>
+      </CardContent>
     </Card>
   );
 

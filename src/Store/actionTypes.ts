@@ -1,5 +1,6 @@
 import { Page } from "../TelegraphAPI/apiTypes";
 import { Bookmark } from "./store";
+import { SearchResult } from "../GoogleSearchAPI/apiTypes";
 
 export type Action<ActionType, PayloadType> = {
   type: ActionType;
@@ -27,7 +28,7 @@ export type SearchActionType =
   | "SEARCH_MODE"
   | "SERP_LOADED"
   | "SERP_LOADED_MORE_RESULTS";
-export type SearchActionPayload = {};
+export type SearchActionPayload = SearchResult;
 export type SearchActionObject = Action<SearchActionType, SearchActionPayload>;
 
 export type UserInfoActionType = "LOGIN" | "LOGOUT";

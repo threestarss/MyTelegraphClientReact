@@ -84,6 +84,21 @@ function fetchSearch(this: any, query: string) {
   };
 }
 
+function loadMoreResults(this: any) {
+  return async () => {
+    try {
+      const result = await googleSearchAPI.loadMoreResults();
+      this.setMoreResults(result);
+    } catch (err) {
+      this.setError(err);
+    }
+  };
+}
+
+function setMoreResults(serp: SearchResult) {
+  return { type: "SERP_LOADED_MORE_RESULTS", payload: serp };
+}
+
 function setSearchResult(serp: SearchResult) {
   return { type: "SERP_LOADED", payload: serp };
 }
@@ -125,7 +140,9 @@ export const articleActions = bindActionCreators(
 export const searchActions = bindActionCreators(
   {
     fetchSearch,
+    loadMoreResults,
     setSearchResult,
+    setMoreResults,
     setError,
   },
   store.dispatch

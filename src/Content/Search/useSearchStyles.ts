@@ -5,4 +5,7 @@ export const useSearchStyles = makeStyles({
     display: "flex",
     flexWrap: "wrap",
   },
+  loadmore: {
+    margin: "0 8px 12px",
+  },
 });
