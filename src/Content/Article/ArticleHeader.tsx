@@ -33,6 +33,7 @@ export const ArticleHeader = ({
         title={title}
         image_url={image_url}
         marked={marked}
+        position={{ top: "5px", right: "10px" }}
       />
     </header>
   );

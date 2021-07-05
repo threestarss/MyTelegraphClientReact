@@ -23,6 +23,7 @@ const SearchCard = ({ title, url, thumbnail, image }: SearchCardProps) => {
         title={title}
         image_url={thumbnail || image || ""}
         marked={marked}
+        position={{ top: "0px", right: "0px" }}
       />
       <CardMedia
         className={classes.img}

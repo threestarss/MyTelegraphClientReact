@@ -3,18 +3,26 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { bookmarkActions } from "../Store/actionCreators";
 
+//TODO: refactor conditional styles and button coloring
+
 interface BookmarkButtonProps {
   url: string;
   title: string;
   image_url?: string;
   marked: boolean;
+  position: PositionOptions;
+}
+
+interface PositionOptions {
+  top: string;
+  right: string;
 }
 
 const useStyles = makeStyles(() => ({
   root: {
     position: "absolute",
-    top: "5px",
-    right: "10px",
+    top: (flag: PositionOptions) => flag.top,
+    right: (flag: PositionOptions) => flag.right,
   },
 }));
 
@@ -23,12 +31,12 @@ const BookmarkButton = ({
   title,
   image_url,
   marked,
+  position,
 }: BookmarkButtonProps) => {
-  const classes = useStyles();
+  const classes = useStyles(position);
   return (
     <IconButton onClick={handleClick} classes={classes}>
       {marked ? (
-        // TODO: think of better way to color the button
         <BookmarkIcon style={{ color: "#dc143c" }} />
       ) : (
         <BookmarkBorderIcon />
