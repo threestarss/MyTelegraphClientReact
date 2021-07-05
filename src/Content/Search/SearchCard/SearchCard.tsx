@@ -28,17 +28,10 @@ const SearchCard = ({
 }: SearchCardProps) => {
   const classes = useSearchCardStyles();
   const bookmarks = useSelector((state: RootState) => state.bookmarks);
-  let marked = bookmarks.some((bookmark) => bookmark.url === url);
+  let marked = bookmarks.some((bookmark) => bookmark.url === url.toLowerCase());
   return (
     <Card className={classes.root} onClick={handleClick}>
       <ButtonBase className={classes.buttonBase}>
-        <BookmarkButton
-          url={url}
-          title={title}
-          image_url={thumbnail || image || ""}
-          marked={marked}
-          position={{ top: "0px", right: "0px" }}
-        />
         <CardMedia
           className={classes.img}
           component="img"
@@ -50,6 +43,13 @@ const SearchCard = ({
           <Typography variant="body2">{snippet}</Typography>
         </CardContent>
       </ButtonBase>
+      <BookmarkButton
+        url={url}
+        title={title}
+        image_url={thumbnail || image || ""}
+        marked={marked}
+        position={{ top: "0px", right: "0px" }}
+      />
     </Card>
   );
 

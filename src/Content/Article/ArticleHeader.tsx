@@ -21,7 +21,7 @@ export const ArticleHeader = ({
   image_url,
 }: ArticleHeaderProps) => {
   const bookmarks = useSelector((state: RootState) => state.bookmarks);
-  let marked = bookmarks.some((bookmark) => bookmark.url === url);
+  let marked = bookmarks.some((bookmark) => bookmark.url === url.toLowerCase());
   return (
     <header>
       <Typography component="h1">{title}</Typography>

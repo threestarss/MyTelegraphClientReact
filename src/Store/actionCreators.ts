@@ -32,7 +32,7 @@ function deleteBookmark(
   return {
     type: "DELETE_BOOKMARK",
     payload: {
-      url: url,
+      url: url.toLowerCase(),
       title: title,
       image_url: image_url,
     },
