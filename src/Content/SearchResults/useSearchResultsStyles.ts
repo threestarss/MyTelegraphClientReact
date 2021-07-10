@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useSearchStyles = makeStyles({
+export const useSearchResultsStyles = makeStyles({
   root: {
     display: "flex",
     flexWrap: "wrap",

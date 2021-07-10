@@ -6,10 +6,11 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import { useSearchCardStyles } from "./useSearchCardStyles";
-import BookmarkButton from "../../../Bookmarks/BookmarkButton";
+import { useSearchResultsCardStyles } from "./useSearchResultsCardStyles";
 import { RootState } from "../../../Store/store";
-import { articleActions, appModeActions } from "../../../Store/actionCreators";
+import { articleActions } from "../../Article/articleActions";
+import { appModeActions } from "../../../appModeActions";
+import BookmarkButton from "../../../Bookmarks/BookmarkButton";
 
 interface SearchCardProps {
   title: string;
@@ -19,14 +20,14 @@ interface SearchCardProps {
   image?: string;
 }
 
-const SearchCard = ({
+const SearchResultsCard = ({
   title,
   url,
   snippet,
   thumbnail,
   image,
 }: SearchCardProps) => {
-  const classes = useSearchCardStyles();
+  const classes = useSearchResultsCardStyles();
   const bookmarks = useSelector((state: RootState) => state.bookmarks);
   let marked = bookmarks.some((bookmark) => bookmark.url === url.toLowerCase());
   return (
@@ -63,8 +64,8 @@ const SearchCard = ({
       return;
     console.log(event);
     appModeActions.setArticleMode();
-    articleActions.fetchArticle(url);
+    articleActions.getArticle(url);
   }
 };
 
-export default SearchCard;
+export default SearchResultsCard;

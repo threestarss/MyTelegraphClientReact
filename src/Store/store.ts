@@ -6,7 +6,7 @@ import { SearchResult } from "../GoogleSearchAPI/apiTypes";
 import appStateReducer from "../appStateReducer";
 import bookmarksReducer from "../Bookmarks/bookmarksReducer";
 import articleReducer from "../Content/Article/articleReducer";
-import searchReducer from "../Content/Search/searchReducer";
+import searchReducer from "../Content/SearchResults/searchReducer";
 import userInfoReducer from "../User/userInfoReducer";
 
 export const rootReducer = combineReducers({

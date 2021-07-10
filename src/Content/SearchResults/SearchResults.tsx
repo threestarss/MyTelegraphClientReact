@@ -1,17 +1,13 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
-import { searchActions } from "../../Store/actionCreators";
 import { RootState } from "../../Store/store";
-import SearchCard from "./SearchCard/SearchCard";
-import { useSearchStyles } from "./useSearchStyles";
+import { searchActions } from "../../Header/searchActions";
+import { useSearchResultsStyles } from "./useSearchResultsStyles";
+import SearchCard from "./SearchResultsCard/SearchResultsCard";
 
 const Search = () => {
-  const classes = useSearchStyles();
+  const classes = useSearchResultsStyles();
   const serp = useSelector((state: RootState) => state.search);
-  useEffect(() => {
-    searchActions.fetchSearch("Undermind");
-  }, []);
   return serp.items ? (
     <>
       <div className={classes.root}>

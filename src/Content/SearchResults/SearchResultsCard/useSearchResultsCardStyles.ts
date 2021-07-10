@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useSearchCardStyles = makeStyles({
+export const useSearchResultsCardStyles = makeStyles({
   root: {
     position: "relative",
     width: "228px",

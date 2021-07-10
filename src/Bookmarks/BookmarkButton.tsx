@@ -1,7 +1,7 @@
 import { IconButton, makeStyles } from "@material-ui/core";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import { bookmarkActions } from "../Store/actionCreators";
+import { bookmarkActions } from "./bookmarkActions";
 
 //TODO: refactor conditional styles and button coloring
 
@@ -47,7 +47,7 @@ const BookmarkButton = ({
     if (!marked) {
       bookmarkActions.add(url, title, image_url);
     } else {
-      bookmarkActions.delete(url, title, image_url);
+      bookmarkActions.remove(url, title, image_url);
     }
   }
 };

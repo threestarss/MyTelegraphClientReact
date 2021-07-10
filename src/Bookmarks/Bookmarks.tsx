@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Box } from "@material-ui/core";
-import { bookmarkActions } from "../Store/actionCreators";
+import { bookmarkActions } from "./bookmarkActions";
 
 const Bookmarks = () => {
   useEffect(() => {
