@@ -1,3 +1,5 @@
+import { SearchResult } from "./apiTypes";
+
 interface GoogleSearchAPI {
   query: string;
   serpStart: number;
@@ -11,7 +13,7 @@ class GoogleSearchAPI {
     this.url = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBit3zVmXZThAxAnPT_j8qBnrQgRN_IrRg&cx=0d7cbe59cd07cfd30&q=${this.query}&start=${this.serpStart}`;
   }
 
-  async search(query: string) {
+  async search(query: string): Promise<SearchResult> {
     this.query = query;
     this.serpStart = 0;
     this.updateUrl();
@@ -21,7 +23,7 @@ class GoogleSearchAPI {
     return result;
   }
 
-  async loadMoreResults() {
+  async loadMoreResults(): Promise<SearchResult> {
     this.serpStart += 10;
     this.updateUrl();
     const response = await fetch(this.url);

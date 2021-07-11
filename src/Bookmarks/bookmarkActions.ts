@@ -1,6 +1,21 @@
 import { bindActionCreators } from "redux";
 import { store } from "../Store/store";
-import { BookmarksPayload, BookmarksActionObject } from "../Store/actionTypes";
+
+export type Bookmark = {
+  url: string;
+  title: string;
+  image_url?: string;
+};
+
+export type BookmarksActionType =
+  | "ADD_BOOKMARK"
+  | "DELETE_BOOKMARK"
+  | "LOAD_BOOKMARKS_FROM_LOCAL_STORAGE";
+export type BookmarksPayload = Bookmark;
+export type BookmarksActionObject = {
+  type: BookmarksActionType;
+  payload: BookmarksPayload;
+};
 
 function add(
   url: string,

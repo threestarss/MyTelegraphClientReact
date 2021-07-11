@@ -1,5 +1,5 @@
 import { Page } from "../TelegraphAPI/apiTypes";
-import { Bookmark } from "./store";
+import { Bookmark } from "../Bookmarks/bookmarkActions";
 import { SearchResult } from "../GoogleSearchAPI/apiTypes";
 
 export type Action<ActionType, PayloadType> = {

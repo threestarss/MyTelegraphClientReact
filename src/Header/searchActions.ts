@@ -2,8 +2,17 @@ import { bindActionCreators } from "redux";
 import { store } from "../Store/store";
 import googleSearchAPI from "../GoogleSearchAPI/googleSearchAPI";
 import { SearchResult } from "../GoogleSearchAPI/apiTypes";
+import { SearchActionObject } from "../Store/actionTypes";
 
-function getSearchResults(this: any, query: string) {
+interface SearchActions {
+  getSearchResults: (query: string) => () => Promise<void>;
+  loadMoreResults: () => () => Promise<void>;
+  setSearchResult: (serp: SearchResult) => SearchActionObject;
+  setMoreResults: (serp: SearchResult) => SearchActionObject;
+  setError: (err: Error) => void;
+}
+
+function getSearchResults(this: SearchActions, query: string) {
   return async () => {
     try {
       const result = await googleSearchAPI.search(query);
@@ -14,7 +23,7 @@ function getSearchResults(this: any, query: string) {
   };
 }
 
-function loadMoreResults(this: any) {
+function loadMoreResults(this: SearchActions) {
   return async () => {
     try {
       const result = await googleSearchAPI.loadMoreResults();
@@ -25,11 +34,11 @@ function loadMoreResults(this: any) {
   };
 }
 
-function setMoreResults(serp: SearchResult) {
+function setMoreResults(serp: SearchResult): SearchActionObject {
   return { type: "SERP_LOADED_MORE_RESULTS", payload: serp };
 }
 
-function setSearchResult(serp: SearchResult) {
+function setSearchResult(serp: SearchResult): SearchActionObject {
   return { type: "SERP_LOADED", payload: serp };
 }
 

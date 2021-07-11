@@ -1,5 +1,5 @@
 import { BookmarksActionObject } from "../Store/actionTypes";
-import { Bookmark } from "../Store/store";
+import { Bookmark } from "./bookmarkActions";
 
 export default function bookmarksReducer(
   state: Bookmark[] = [],

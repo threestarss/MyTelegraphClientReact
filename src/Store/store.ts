@@ -8,6 +8,7 @@ import bookmarksReducer from "../Bookmarks/bookmarksReducer";
 import articleReducer from "../Content/Article/articleReducer";
 import searchReducer from "../Content/SearchResults/searchReducer";
 import userInfoReducer from "../User/userInfoReducer";
+import { Bookmark } from "../Bookmarks/bookmarkActions";
 
 export const rootReducer = combineReducers({
   appState: appStateReducer,
@@ -21,12 +22,6 @@ export const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
-
-export type Bookmark = {
-  url: string;
-  title: string;
-  image_url?: string;
-};
 
 export interface RootState {
   appState: {

@@ -1,3 +1,5 @@
+import { Page } from "./apiTypes";
+
 interface TelegraphAPI {
   url: string;
   token: string;
