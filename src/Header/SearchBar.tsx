@@ -35,6 +35,7 @@ const SearchBar = withRouter(({ history }) => {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    searchActions.clearSearchResults();
     appModeActions.setSearchMode();
     history.push(`/search?query=${query}`);
   }

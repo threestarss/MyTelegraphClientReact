@@ -14,6 +14,8 @@ export default function searchReducer(
         ...state,
         items: [...state.items, ...action.payload.items],
       };
+    case "SERP_CLEAR":
+      return {};
     default:
       return state;
   }

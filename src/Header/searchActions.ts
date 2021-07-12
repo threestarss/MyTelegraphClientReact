@@ -38,6 +38,10 @@ function setMoreResults(serp: SearchResult): SearchActionObject {
   return { type: "SERP_LOADED_MORE_RESULTS", payload: serp };
 }
 
+function clearSearchResults(): SearchActionObject {
+  return { type: "SERP_CLEAR" };
+}
+
 function setSearchResult(serp: SearchResult): SearchActionObject {
   return { type: "SERP_LOADED", payload: serp };
 }
@@ -51,6 +55,7 @@ export const searchActions = bindActionCreators(
     getSearchResults,
     loadMoreResults,
     setSearchResult,
+    clearSearchResults,
     setMoreResults,
     setError,
   },

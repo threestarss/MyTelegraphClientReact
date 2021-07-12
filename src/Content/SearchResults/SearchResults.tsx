@@ -12,7 +12,7 @@ const Search = withRouter(({ location }) => {
   const serp = useSelector((state: RootState) => state.search);
   useEffect(() => {
     //TODO: refactor
-    if (!serp.items.length) {
+    if (!serp.searchInformation) {
       searchActions.getSearchResults(location.search.slice(7));
     }
   });

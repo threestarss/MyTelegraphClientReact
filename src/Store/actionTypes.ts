@@ -30,7 +30,8 @@ export type ArticleActionObject = Action<
 export type SearchActionType =
   | "SEARCH_MODE"
   | "SERP_LOADED"
-  | "SERP_LOADED_MORE_RESULTS";
+  | "SERP_LOADED_MORE_RESULTS"
+  | "SERP_CLEAR";
 export type SearchActionPayload = SearchResult;
 export type SearchActionObject = Action<SearchActionType, SearchActionPayload>;
 
