@@ -18,4 +18,8 @@ export const useSearchResultsCardStyles = makeStyles({
     flexDirection: "column",
     height: "100%",
   },
+  a: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 });

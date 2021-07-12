@@ -17,7 +17,10 @@ export type BookmarksActionObject = {
   payload: BookmarksPayload;
 };
 
-export type ArticleActionType = "ARTICLE_MODE" | "ARTICLE_CONTENT_LOADED";
+export type ArticleActionType =
+  | "ARTICLE_MODE"
+  | "ARTICLE_CONTENT_LOADED"
+  | "ARTICLE_CONTENT_CLEAR";
 export type ArticleActionPayload = Page;
 export type ArticleActionObject = Action<
   ArticleActionType,

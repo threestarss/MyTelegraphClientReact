@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   ButtonBase,
   Card,
@@ -29,32 +30,37 @@ const SearchResultsCard = ({
 }: SearchCardProps) => {
   const classes = useSearchResultsCardStyles();
   const bookmarks = useSelector((state: RootState) => state.bookmarks);
-  let marked = bookmarks.some((bookmark) => bookmark.url === url.toLowerCase());
+  const path = new URL(url).pathname;
+  const marked = bookmarks.some(
+    (bookmark) => bookmark.url === url.toLowerCase()
+  );
   return (
-    <Card className={classes.root} onClick={handleClick}>
-      <ButtonBase className={classes.buttonBase}>
-        <CardMedia
-          className={classes.img}
-          component="img"
-          src={thumbnail || image || ""}
-        ></CardMedia>
-        <CardContent>
-          <Typography variant="h5">{title}</Typography>
-          <br></br>
-          <Typography variant="body2">{snippet}</Typography>
-        </CardContent>
-      </ButtonBase>
-      <BookmarkButton
-        url={url}
-        title={title}
-        image_url={thumbnail || image || ""}
-        marked={marked}
-        position={{ top: "0px", right: "0px" }}
-      />
-    </Card>
+    <Link to={`${path.toLowerCase()}`} className={classes.a}>
+      <Card className={classes.root} onClick={handleClick}>
+        <ButtonBase className={classes.buttonBase}>
+          <CardMedia
+            className={classes.img}
+            component="img"
+            src={thumbnail || image || ""}
+          ></CardMedia>
+          <CardContent>
+            <Typography variant="h5">{title}</Typography>
+            <br></br>
+            <Typography variant="body2">{snippet}</Typography>
+          </CardContent>
+        </ButtonBase>
+        <BookmarkButton
+          url={url}
+          title={title}
+          image_url={thumbnail || image || ""}
+          marked={marked}
+          position={{ top: "0px", right: "0px" }}
+        />
+      </Card>
+    </Link>
   );
 
-  function handleClick(event: any) {
+  async function handleClick(event: any) {
     // TODO: think of better click handler, these target checks look ugly
     if (
       event.target.tagName === "svg" ||
@@ -63,8 +69,8 @@ const SearchResultsCard = ({
     )
       return;
     console.log(event);
+    articleActions.clearArticleContent();
     appModeActions.setArticleMode();
-    articleActions.getArticle(url);
   }
 };
 

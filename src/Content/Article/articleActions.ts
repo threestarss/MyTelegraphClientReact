@@ -25,6 +25,10 @@ function setArticleContent(article: Page): ArticleActionObject {
   return { type: "ARTICLE_CONTENT_LOADED", payload: article };
 }
 
+function clearArticleContent() {
+  return { type: "ARTICLE_CONTENT_CLEAR" };
+}
+
 function setError(error: Error) {
   console.log(error);
 }
@@ -33,6 +37,7 @@ export const articleActions = bindActionCreators(
   {
     getArticle,
     setArticleContent,
+    clearArticleContent,
     setError,
   },
   store.dispatch

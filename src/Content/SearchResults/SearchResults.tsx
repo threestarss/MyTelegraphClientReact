@@ -1,18 +1,26 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { RootState } from "../../Store/store";
 import { searchActions } from "../../Header/searchActions";
 import { useSearchResultsStyles } from "./useSearchResultsStyles";
-import SearchCard from "./SearchResultsCard/SearchResultsCard";
+import SearchResultsCard from "./SearchResultsCard/SearchResultsCard";
 
-const Search = () => {
+const Search = withRouter(({ location }) => {
   const classes = useSearchResultsStyles();
   const serp = useSelector((state: RootState) => state.search);
+  useEffect(() => {
+    //TODO: refactor
+    if (!serp.items.length) {
+      searchActions.getSearchResults(location.search.slice(7));
+    }
+  });
   return serp.items ? (
     <>
       <div className={classes.root}>
         {serp.items.map((item) => (
-          <SearchCard
+          <SearchResultsCard
             title={trimTitle(item.title)}
             url={item.link}
             snippet={item.snippet}
@@ -39,7 +47,7 @@ const Search = () => {
   function loadMore() {
     searchActions.loadMoreResults();
   }
-};
+});
 
 // every article title that comes from Google Custom Search API has "– Telegraph" substring at the end.
 // function below gets rid of it

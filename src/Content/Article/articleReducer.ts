@@ -9,6 +9,8 @@ export default function articleReducer(
   switch (action.type) {
     case "ARTICLE_CONTENT_LOADED":
       return { ...action.payload, url: url?.toLowerCase() };
+    case "ARTICLE_CONTENT_CLEAR":
+      return {};
     default:
       return state;
   }
