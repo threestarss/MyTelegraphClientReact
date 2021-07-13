@@ -7,6 +7,7 @@ import { ArticleHeader } from "./ArticleHeader";
 import { ArticleElement } from "./ArticleElement";
 import { useArticleStyles } from "./useArticleStyles";
 import { articleActions } from "./articleActions";
+import Loading from "../../Loading";
 
 const Article = withRouter(({ location }) => {
   const classes = useArticleStyles();
@@ -19,7 +20,7 @@ const Article = withRouter(({ location }) => {
       articleActions.getArticle("https://xd" + location.pathname);
     }
   });
-  if (!content) return null;
+  if (!content) return <Loading />;
   return (
     <Paper component="article" elevation={3} classes={classes}>
       <ArticleHeader

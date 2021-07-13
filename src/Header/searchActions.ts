@@ -48,6 +48,7 @@ function setSearchResult(serp: SearchResult): SearchActionObject {
 
 function setError(error: Error) {
   console.log(error);
+  return { type: "error" };
 }
 
 export const searchActions = bindActionCreators(

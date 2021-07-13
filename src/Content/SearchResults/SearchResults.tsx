@@ -1,22 +1,25 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { RootState } from "../../Store/store";
 import { searchActions } from "../../Header/searchActions";
 import { useSearchResultsStyles } from "./useSearchResultsStyles";
 import SearchResultsCard from "./SearchResultsCard/SearchResultsCard";
+import Loading from "../../Loading";
 
 const Search = withRouter(({ location }) => {
   const classes = useSearchResultsStyles();
   const serp = useSelector((state: RootState) => state.search);
+  const query = location.search.slice(7);
   useEffect(() => {
     //TODO: refactor
     if (!serp.searchInformation) {
-      searchActions.getSearchResults(location.search.slice(7));
+      searchActions.getSearchResults(query);
     }
   });
-  return serp.items ? (
+  if (!serp.items) return <Loading />;
+  return (
     <>
       <div className={classes.root}>
         {serp.items.map((item) => (
@@ -42,7 +45,7 @@ const Search = withRouter(({ location }) => {
         Load more results
       </Button>
     </>
-  ) : null;
+  );
 
   function loadMore() {
     searchActions.loadMoreResults();
